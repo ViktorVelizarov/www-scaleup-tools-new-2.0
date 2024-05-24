@@ -1,5 +1,5 @@
-import Navbar from '@/components/Navbar2/Navbar';
-import Footer from '@/components/Footer2/Footer';
+import Navbar from '@/components/Navbar/Navbar';
+import Footer from '@/components/Footer/Footer';
 import Consent from '@/components/Consent/Consent';
 
 

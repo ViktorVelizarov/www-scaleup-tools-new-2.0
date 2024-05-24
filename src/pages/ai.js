@@ -5,18 +5,16 @@ import AIToolsLayout from '@/Layouts/AIToolsLayout';
 import { ClipLoader } from 'react-spinners';
 import { IoIosRefresh } from "react-icons/io";
 import Head from 'next/head';
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui/checkbox";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-  } from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
 
-  
 function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory }) {
   return (
-    
     <article className="flex flex-col px-4 pt-4 pb-8 mt-5 w-full bg-white rounded-xl max-md:pr-5">
       <div className="flex gap-5 justify-between w-full">
         <div className="flex gap-5 justify-between text-xl font-bold">
@@ -45,7 +43,7 @@ const ContactPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const toolsPerPage = 12;
     const [pageWindow, setPageWindow] = useState([1, 5]);
-  
+
     useEffect(() => {
       const fetchToolData = async () => {
         try {
@@ -58,7 +56,7 @@ const ContactPage = () => {
           setLoading(false);
         }
       };
-  
+
       const fetchCategories = async () => {
         try {
           const response = await fetch('/api/getAItools/categories');
@@ -80,11 +78,11 @@ const ContactPage = () => {
           console.error('Error fetching categories:', error);
         }
       };
-  
+
       fetchToolData();
       fetchCategories();
     }, []);
-  
+
     const handleCheckboxChange = (value, type) => {
       if (type === 'main') {
         if (selectedMainCategories.includes(value)) {
@@ -106,29 +104,29 @@ const ContactPage = () => {
         setCurrentPage(1);
       }
     };
-  
+
     const handleResetFilters = () => {
       setSelectedMainCategories([]);
       setSelectedSubCategories([]);
       setSelectedFilter(null);
       setCurrentPage(1);
     };
-  
+
     const filteredTools = toolData.filter(tool => {
       const mainCategoryMatch = selectedMainCategories.length === 0 || selectedMainCategories.includes(tool.main_category_name);
       const subCategoryMatch = selectedSubCategories.length === 0 || selectedSubCategories.includes(tool.sub_category_name);
       const priceMatch = !selectedFilter || (selectedFilter === 'free' && tool.Free_version) || (selectedFilter === 'paid' && tool.Paid_version);
       return mainCategoryMatch && subCategoryMatch && priceMatch;
     });
-  
+
     const totalPages = Math.ceil(filteredTools.length / toolsPerPage);
     const indexOfLastTool = currentPage * toolsPerPage;
     const indexOfFirstTool = indexOfLastTool - toolsPerPage;
     const currentTools = filteredTools.slice(indexOfFirstTool, indexOfLastTool);
-  
+
     const paginate = (pageNumber) => {
       setCurrentPage(pageNumber);
-  
+
       const windowSize = 5;
       let newPageWindow;
       if (pageNumber <= Math.ceil(windowSize / 2)) {
@@ -141,82 +139,83 @@ const ContactPage = () => {
       setPageWindow(newPageWindow);
     };
 
+    return (
+      <AIToolsLayout>
+        <div className="flex flex-col min-h-screen bg-blue-200">
+          <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://i.pinimg.com/originals/32/b8/77/32b877ed4aa7778cc7d43ebb7d95a6f1.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+            <h1 className="text-5xl font-bold text-center text-black max-md:max-w-full max-md:text-4xl mt-32">Find AI tools for all types of use cases</h1>
+            <form className="flex justify-center items-start px-3.5 py-4 mt-16 max-w-full text-2xl font-extralight text-black bg-white rounded-xl border border-black border-solid shadow-sm w-[750px] max-md:pr-5 max-md:mt-10">
+              <label className="sr-only" htmlFor="toolInput">Enter a tool name</label>
+              <input className="w-full bg-transparent border-none outline-none" type="text" id="toolInput" placeholder="Enter a tool name...." aria-label="Enter a tool name...." />
+            </form>
+          </header>
 
-  return (
-    <AIToolsLayout>
-    <div className="flex flex-col min-h-screen bg-blue-200">
-      <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://i.pinimg.com/originals/32/b8/77/32b877ed4aa7778cc7d43ebb7d95a6f1.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-        <h1 className="text-5xl font-bold text-center text-black max-md:max-w-full max-md:text-4xl mt-32">Find AI tools for all types of use cases</h1>
-        <form className="flex justify-center items-start px-3.5 py-4 mt-16 max-w-full text-2xl font-extralight text-black bg-white rounded-xl border border-black border-solid shadow-sm w-[750px] max-md:pr-5 max-md:mt-10">
-          <label className="sr-only" htmlFor="toolInput">Enter a tool name</label>
-          <input className="w-full bg-transparent border-none outline-none" type="text" id="toolInput" placeholder="Enter a tool name...." aria-label="Enter a tool name...." />
-        </form>
-      </header>
-
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-blue-200">
-        <div className="md:col-span-1 p-14">
-          <div className="self-start pr-10">
-            <section>
-              <h2 className="text-2xl font-bold mb-4 ml-2 text-black">Filters <button onClick={handleResetFilters} className="ml-5 bg-gray-200 text-black px-1 py-1 rounded-lg"><IoIosRefresh /></button></h2>
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-                    <AccordionContent>
-
-                    {categories.map(category => (
-                        <div className="items-top flex space-x-2">
-                    <Checkbox   
-                    />
-                    <div className="grid gap-1.5 leading-none">
-                        <label
-                        htmlFor="terms1"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                        {category.main_category_name}
-                        </label>
-                    </div>
-                    </div>
-                    ))}
-
-                    
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-                    <AccordionContent>
-                   
-                    {categories.map(category => (
-                        <div className="items-top flex space-x-2">
-                    <Checkbox   
-                    />
-                    <div className="grid gap-1.5 leading-none">
-                        <label
-                        htmlFor="terms1"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                        {category.sub_category_name}
-                        </label>
-                    </div>
-                    </div>
-                    ))}
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-                    <AccordionContent>
-                    <div>
-                    <div className="flex items-center">
-                      <input type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} className="w-5 h-5" />
-                      <label className='font-normal ml-2' htmlFor="free">Free</label>
-                    </div>
-                    <div className="flex items-center mt-2">
-                      <input type="radio" id="paid" name="priceFilter" value="paid" onChange={() => handleCheckboxChange("paid", 'price')} checked={selectedFilter === "paid"} className="w-5 h-5" />
-                      <label className='font-normal ml-2' htmlFor="paid">Paid</label>
-                    </div>
-                    </div>
-                    </AccordionContent>
-                </AccordionItem>
-                </Accordion>
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-blue-200">
+            <div className="md:col-span-1 p-14">
+              <div className="self-start pr-10">
+                <section>
+                  <h2 className="text-2xl font-bold mb-4 ml-2 text-black">Filters <button onClick={handleResetFilters} className="ml-5 bg-gray-200 text-black px-1 py-1 rounded-lg"><IoIosRefresh /></button></h2>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>Categories</AccordionTrigger>
+                      <AccordionContent>
+                        {categories.map(category => (
+                          <div className="items-top flex space-x-2" key={category.main_category_name}>
+                            <Checkbox
+                              value={category.main_category_name}
+                              onCheckedChange={(checked) => handleCheckboxChange(category.main_category_name, 'main')}
+                              checked={selectedMainCategories.includes(category.main_category_name)}
+                            />
+                            <div className="grid gap-1.5 leading-none">
+                              <label
+                                htmlFor="terms1"
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {category.main_category_name}
+                              </label>
+                            </div>
+                          </div>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                      <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                      <AccordionContent>
+                        {categories.map(category => (
+                          <div className="items-top flex space-x-2" key={category.sub_category_name}>
+                            <Checkbox
+                              value={category.sub_category_name}
+                              onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
+                              checked={selectedSubCategories.includes(category.sub_category_name)}
+                            />
+                            <div className="grid gap-1.5 leading-none">
+                              <label
+                                htmlFor="terms2"
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {category.sub_category_name}
+                              </label>
+                            </div>
+                          </div>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-3">
+                      <AccordionTrigger>Price</AccordionTrigger>
+                      <AccordionContent>
+                        <div>
+                          <div className="flex items-center">
+                            <input type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} className="w-5 h-5" />
+                            <label className='font-normal ml-2' htmlFor="free">Free</label>
+                          </div>
+                          <div className="flex items-center mt-2">
+                            <input type="radio" id="paid" name="priceFilter" value="paid" onChange={() => handleCheckboxChange("paid", 'price')} checked={selectedFilter === "paid"} className="w-5 h-5" />
+                            <label className='font-normal ml-2' htmlFor="paid">Paid</label>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </section>
               </div>
             </div>
@@ -269,8 +268,8 @@ const ContactPage = () => {
             </div>
           </div>
         </div>
-        </AIToolsLayout>
-  );
+      </AIToolsLayout>
+    );
 };
 
 export default ContactPage;
