@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-
+import AIToolsLayout from '@/Layouts/AIToolsLayout';
 import { ClipLoader } from 'react-spinners';
 import { IoIosRefresh } from "react-icons/io";
 import Head from 'next/head';
@@ -16,6 +16,7 @@ import {
   
 function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory }) {
   return (
+    
     <article className="flex flex-col px-4 pt-4 pb-8 mt-5 w-full bg-white rounded-xl max-md:pr-5">
       <div className="flex gap-5 justify-between w-full">
         <div className="flex gap-5 justify-between text-xl font-bold">
@@ -142,6 +143,7 @@ const ContactPage = () => {
 
 
   return (
+    <AIToolsLayout>
     <div className="flex flex-col min-h-screen bg-blue-200">
       <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://i.pinimg.com/originals/32/b8/77/32b877ed4aa7778cc7d43ebb7d95a6f1.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
         <h1 className="text-5xl font-bold text-center text-black max-md:max-w-full max-md:text-4xl mt-32">Find AI tools for all types of use cases</h1>
@@ -163,7 +165,8 @@ const ContactPage = () => {
 
                     {categories.map(category => (
                         <div className="items-top flex space-x-2">
-                    <Checkbox id="terms1" />
+                    <Checkbox   
+                    />
                     <div className="grid gap-1.5 leading-none">
                         <label
                         htmlFor="terms1"
@@ -181,13 +184,36 @@ const ContactPage = () => {
                 <AccordionItem value="item-1">
                     <AccordionTrigger>Is it accessible?</AccordionTrigger>
                     <AccordionContent>
-                    Yes. It adheres to the WAI-ARIA design pattern.
+                   
+                    {categories.map(category => (
+                        <div className="items-top flex space-x-2">
+                    <Checkbox   
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                        <label
+                        htmlFor="terms1"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                        {category.sub_category_name}
+                        </label>
+                    </div>
+                    </div>
+                    ))}
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-1">
                     <AccordionTrigger>Is it accessible?</AccordionTrigger>
                     <AccordionContent>
-                    Yes. It adheres to the WAI-ARIA design pattern.
+                    <div>
+                    <div className="flex items-center">
+                      <input type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} className="w-5 h-5" />
+                      <label className='font-normal ml-2' htmlFor="free">Free</label>
+                    </div>
+                    <div className="flex items-center mt-2">
+                      <input type="radio" id="paid" name="priceFilter" value="paid" onChange={() => handleCheckboxChange("paid", 'price')} checked={selectedFilter === "paid"} className="w-5 h-5" />
+                      <label className='font-normal ml-2' htmlFor="paid">Paid</label>
+                    </div>
+                    </div>
                     </AccordionContent>
                 </AccordionItem>
                 </Accordion>
@@ -243,6 +269,7 @@ const ContactPage = () => {
             </div>
           </div>
         </div>
+        </AIToolsLayout>
   );
 };
 
