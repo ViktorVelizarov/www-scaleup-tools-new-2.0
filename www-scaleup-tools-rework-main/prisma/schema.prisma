@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// after each update run "npx prisma generate" and restart development server
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tag {
+  id          Int       @id @default(autoincrement())
+  title       String?
+  textId      String?
+  classNm     String?
+  name        String?
+  value       String?
+  labelFor    String?
+  textColor   String?
+  bgColor     String?
+  borderColor String?
+  bgColorTool String?
+  tool        ToolTag[]
+
+  @@map("SUT_tags")
+}
+
+model Tool {
+  id          Int       @id @default(autoincrement())
+  title       String?
+  image       String?
+  description String?
+  tags        ToolTag[]
+
+  @@map("SUT_tools")
+}
+
+model ToolTag {
+  tag     Tag  @relation(fields: [tag_id], references: [id])
+  tag_id  Int
+  tool    Tool @relation(fields: [tool_id], references: [id])
+  tool_id Int
+
+  @@id([tag_id, tool_id])
+  @@map("SUT_tool_tag")
+}
+
+model Users {
+  @@map("SUT_users")
+  id Int @id @default(autoincrement())
+  email String
+  role String @default("editor")
+}
+
+model Privacy{
+  @@map("Privacy_policy")
+  website String @id
+  content String
+}
