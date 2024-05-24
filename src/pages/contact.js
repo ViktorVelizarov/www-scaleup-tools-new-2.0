@@ -5,6 +5,13 @@ import { contactCardInfo } from "@/components/ContactCard/cardConsts";
 import ContactCard from "@/components/ContactCard/ContactCard";
 import { useState } from 'react';
 import Head from 'next/head';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 
 const options = [
   { text: "-- select an option --", color: "text-[#707070]" },
@@ -29,9 +36,19 @@ const ContactPage = () => {
       ></div>
       <div className="absolute w-full min-h-[23rem] h-[50vh] max-h-[28rem] shadow-orange"></div>
       <div className="relative max-w-7xl m-[0_auto] min-h-[23rem] h-[50vh] max-h-[28rem] p-8">
+      
         <h1 className="text-3xl sm:text-5xl mt-20 sm:mt-36 font-bold text-white mb-2">
           CONTACT
         </h1>
+        <Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
         <h5 className="text-white text-xl mb-8">
           Get in touch, schedule a chat and let's scale your business up.
         </h5>
