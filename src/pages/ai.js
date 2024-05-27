@@ -179,7 +179,7 @@ const ContactPage = () => {
                       </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-2">
-                      <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                      <AccordionTrigger>Sub-Category</AccordionTrigger>
                       <AccordionContent>
                         {categories.map(category => (
                           <div className="items-top flex space-x-2" key={category.sub_category_name}>
