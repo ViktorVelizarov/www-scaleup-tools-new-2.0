@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState, useEffect } from 'react';
 import AIToolsLayout from '@/Layouts/AIToolsLayout';
 import { ClipLoader } from 'react-spinners';
@@ -14,6 +12,17 @@ import {
 } from "@/components/ui/accordion";
 
 function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory }) {
+  // Function to get the first sentence from a description
+  const getFirstSentence = (text) => {
+    // Split the text into sentences by periods
+    const sentences = text.split('.');
+    // Return the first sentence
+    return sentences[0];
+  };
+
+  // Ensure description is not too long
+  const truncatedDescription = description ? getFirstSentence(description) : 'Description not available';
+
   return (
     <article className="flex flex-col px-4 pt-4 pb-8 mt-5 w-full bg-white rounded-xl max-md:pr-5">
       <div className="flex gap-5 justify-between w-full">
@@ -27,14 +36,15 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         <div>Main Category: {mainCategory}</div>
         <div>Sub Category: {subCategory}</div>
       </div>
-      <div className="mt-6 text-base font-extralight">{description}</div>
+      <div className="mt-6 text-base font-extralight">{truncatedDescription}</div>
     </article>
   );
 }
 
 const ContactPage = () => {
-
     const [toolData, setToolData] = useState([]);
+    const [sheetsData, setSheetsData] = useState([]);
+    const [toolDescriptions, setToolDescriptions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedMainCategories, setSelectedMainCategories] = useState([]);
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
@@ -45,6 +55,16 @@ const ContactPage = () => {
     const [pageWindow, setPageWindow] = useState([1, 5]);
 
     useEffect(() => {
+      const fetchSheetsData = async () => {
+        try {
+          const response = await fetch('/api/getSheetsData/getLogos');
+          const data = await response.json();
+          setSheetsData(data);
+        } catch (error) {
+          console.error('Error fetching data from Google Sheets:', error);
+        }
+      };
+
       const fetchToolData = async () => {
         try {
           const response = await fetch('/api/getAItools/tools');
@@ -52,6 +72,18 @@ const ContactPage = () => {
           setToolData(data);
         } catch (error) {
           console.error('Error fetching tool data:', error);
+        }
+      };
+
+      const fetchToolDescriptions = async () => {
+        try {
+          const response = await fetch('/api/getSheetsData/getDescriptions');
+          const data = await response.json();
+          console.log("descriptions:")
+          console.log(data)
+          setToolDescriptions(data);
+        } catch (error) {
+          console.error('Error fetching tool descriptions:', error);
         } finally {
           setLoading(false);
         }
@@ -79,7 +111,9 @@ const ContactPage = () => {
         }
       };
 
+      fetchSheetsData();
       fetchToolData();
+      fetchToolDescriptions();
       fetchCategories();
     }, []);
 
@@ -169,107 +203,118 @@ const ContactPage = () => {
                             <div className="grid gap-1.5 leading-none">
                               <label
                                 htmlFor="terms1"
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                {category.main_category_name}
-                              </label>
+                                className="text-sm font-medium                                 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {category.main_category_name}
+                                </label>
+                              </div>
+                            </div>
+                          ))}
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="item-2">
+                        <AccordionTrigger>Subcategories</AccordionTrigger>
+                        <AccordionContent>
+                          {categories.map(category => (
+                            <div className="items-top flex space-x-2" key={category.sub_category_name}>
+                              <Checkbox
+                                value={category.sub_category_name}
+                                onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
+                                checked={selectedSubCategories.includes(category.sub_category_name)}
+                              />
+                              <div className="grid gap-1.5 leading-none">
+                                <label
+                                  htmlFor="terms2"
+                                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {category.sub_category_name}
+                                </label>
+                              </div>
+                            </div>
+                          ))}
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="item-3">
+                        <AccordionTrigger>Price</AccordionTrigger>
+                        <AccordionContent>
+                          <div>
+                            <div className="flex items-center">
+                              <input type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} className="w-5 h-5" />
+                              <label className='font-normal ml-2' htmlFor="free">Free</label>
+                            </div>
+                            <div className="flex items-center mt-2">
+                              <input type="radio" id="paid" name="priceFilter" value="paid" onChange={() => handleCheckboxChange("paid", 'price')} checked={selectedFilter === "paid"} className="w-5 h-5" />
+                              <label className='font-normal ml-2' htmlFor="paid">Paid</label>
                             </div>
                           </div>
-                        ))}
-                      </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-2">
-                      <AccordionTrigger>Sub-Category</AccordionTrigger>
-                      <AccordionContent>
-                        {categories.map(category => (
-                          <div className="items-top flex space-x-2" key={category.sub_category_name}>
-                            <Checkbox
-                              value={category.sub_category_name}
-                              onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
-                              checked={selectedSubCategories.includes(category.sub_category_name)}
-                            />
-                            <div className="grid gap-1.5 leading-none">
-                              <label
-                                htmlFor="terms2"
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                {category.sub_category_name}
-                              </label>
-                            </div>
-                          </div>
-                        ))}
-                      </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-3">
-                      <AccordionTrigger>Price</AccordionTrigger>
-                      <AccordionContent>
-                        <div>
-                          <div className="flex items-center">
-                            <input type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} className="w-5 h-5" />
-                            <label className='font-normal ml-2' htmlFor="free">Free</label>
-                          </div>
-                          <div className="flex items-center mt-2">
-                            <input type="radio" id="paid" name="priceFilter" value="paid" onChange={() => handleCheckboxChange("paid", 'price')} checked={selectedFilter === "paid"} className="w-5 h-5" />
-                            <label className='font-normal ml-2' htmlFor="paid">Paid</label>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+                </div>
+              </div>
+  
+              <div className="md:col-span-3">
+                <section className="self-stretch px-0.5 mt-10 max-w-[1040px] max-md:max-w-full text-black">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {loading ? (
+                      <div className="flex justify-center items-center w-full col-span-1 md:col-span-2 lg:col-span-3">
+                        <ClipLoader size={50} color={"#123abc"} loading={loading} />
+                      </div>
+                    ) : (
+                      currentTools.map((tool, index) => {
+                        // Find the matching logo from sheetsData
+                        const matchingSheetData = sheetsData.find(sheet => sheet.logoLink === tool.tool_id.toString());
+                        const imgSrc = matchingSheetData ? matchingSheetData.company : 'https://via.placeholder.com/51'; // Default image if no match is found
+  
+                        // Find the description from toolDescriptions based on tool_id
+                        const descriptionData = toolDescriptions.find(description => description.tool_id === tool.tool_id.toString());
+                        const description = descriptionData ? descriptionData.description : 'Description not available';
+  
+                        return (
+                          <ToolCard
+                            key={index}
+                            imgSrc={imgSrc}
+                            title={tool.tool_name}
+                            description={description}
+                            pricing={tool.Free_version ? "Free" : (tool.Paid_version ? "Paid" : null)}
+                            mainCategory={tool.main_category_name}
+                            subCategory={tool.sub_category_name}
+                          />
+                        );
+                      })
+                    )}
+                  </div>
+                  <div className="flex justify-center mt-8 pb-11">
+                    {pageWindow[0] > 1 && (
+                      <>
+                        <button onClick={() => paginate(1)} className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">1</button>
+                        {pageWindow[0] > 2 && <span className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">...</span>}
+                      </>
+                    )}
+                    {Array.from({ length: pageWindow[1] - pageWindow[0] + 1 }, (_, i) => (
+                      <button
+                        key={pageWindow[0] + i}
+                        onClick={() => paginate(pageWindow[0] + i)}
+                        className={`px-3 py-1 mx-1 ${currentPage === pageWindow[0] + i ? 'bg-blue-500 text-white rounded-lg' : 'bg-gray-200 text-black rounded-lg'}`}
+                      >
+                        {pageWindow[0] + i}
+                      </button>
+                    ))}
+                    {pageWindow[1] < totalPages && (
+                      <>
+                        {pageWindow[1] < totalPages - 1 && <span className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">...</span>}
+                        <button onClick={() => paginate(totalPages)} className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">{totalPages}</button>
+                      </>
+                    )}
+                  </div>
                 </section>
               </div>
             </div>
-
-            <div className="md:col-span-3">
-              <section className="self-stretch px-0.5 mt-10 max-w-[1040px] max-md:max-w-full text-black">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {loading ? (
-                    <div className="flex justify-center items-center w-full col-span-1 md:col-span-2 lg:col-span-3">
-                      <ClipLoader size={50} color={"#123abc"} loading={loading} />
-                    </div>
-                  ) : (
-                    currentTools.map((tool, index) => (
-                      <ToolCard
-                        key={index}
-                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/5131dd1527b6bfd44de733eb18eee4b5a926586836aee4060a1661450a46f233?apiKey=062b4d44d883462aa75330f48dcf750c&"
-                        title={tool.tool_name}
-                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                        pricing={tool.Free_version ? "Free" : (tool.Paid_version ? "Paid" : null)}
-                        mainCategory={tool.main_category_name}
-                        subCategory={tool.sub_category_name}
-                      />
-                    ))
-                  )}
-                </div>
-                <div className="flex justify-center mt-8 pb-11">
-                  {pageWindow[0] > 1 && (
-                    <>
-                      <button onClick={() => paginate(1)} className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">1</button>
-                      {pageWindow[0] > 2 && <span className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">...</span>}
-                    </>
-                  )}
-                  {Array.from({ length: pageWindow[1] - pageWindow[0] + 1 }, (_, i) => (
-                    <button
-                      key={pageWindow[0] + i}
-                      onClick={() => paginate(pageWindow[0] + i)}
-                      className={`px-3 py-1 mx-1 ${currentPage === pageWindow[0] + i ? 'bg-blue-500 text-white rounded-lg' : 'bg-gray-200 text-black rounded-lg'}`}
-                    >
-                      {pageWindow[0] + i}
-                    </button>
-                  ))}
-                  {pageWindow[1] < totalPages && (
-                    <>
-                      {pageWindow[1] < totalPages - 1 && <span className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">...</span>}
-                      <button onClick={() => paginate(totalPages)} className="px-3 py-1 mx-1 bg-gray-200 text-black rounded-lg">{totalPages}</button>
-                    </>
-                  )}
-                </div>
-              </section>
-            </div>
           </div>
-        </div>
-      </AIToolsLayout>
-    );
-};
-
-export default ContactPage;
+        </AIToolsLayout>
+      );
+  };
+  
+  export default ContactPage;
+  
