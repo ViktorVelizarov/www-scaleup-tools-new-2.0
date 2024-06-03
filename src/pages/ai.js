@@ -30,7 +30,7 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{subCategory}</span>
       </div>
       <div className="mt-6 text-base font-extralight overflow-hidden overflow-ellipsis mb-1">
-        {truncatedDescription}...
+      <p  dangerouslySetInnerHTML={{ __html: truncatedDescription }}></p>
       </div>
     </article>
   );

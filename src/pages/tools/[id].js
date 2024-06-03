@@ -211,7 +211,7 @@ const ToolDetailPage = () => {
           </div>
           <div className="mb-8">
             <h2 className="text-2xl font-bold mb-4">About {tool_name}</h2>
-            <p className="text-lg">{description}</p>
+            <p className="text-lg" dangerouslySetInnerHTML={{ __html: description }}></p>
           </div>
           <div>
             <h2 className="text-2xl font-bold mb-4">Similar Tools:</h2>
