@@ -1,5 +1,3 @@
-// ContactPage.jsx
-
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import AIToolsLayout from '@/Layouts/AIToolsLayout';
@@ -37,7 +35,6 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
     </article>
   );
 }
-
 
 const ContactPage = () => {
     const [toolData, setToolData] = useState([]);
@@ -171,6 +168,24 @@ const ContactPage = () => {
       setPageWindow(newPageWindow);
     };
 
+    // Count the number of tools in each main category and subcategory
+    const mainCategoryCounts = {};
+    const subCategoryCounts = {};
+
+    toolData.forEach(tool => {
+      if (mainCategoryCounts[tool.main_category_name]) {
+        mainCategoryCounts[tool.main_category_name]++;
+      } else {
+        mainCategoryCounts[tool.main_category_name] = 1;
+      }
+
+      if (subCategoryCounts[tool.sub_category_name]) {
+        subCategoryCounts[tool.sub_category_name]++;
+      } else {
+        subCategoryCounts[tool.sub_category_name] = 1;
+      }
+    });
+
     return (
       <AIToolsLayout>
         <div className="flex flex-col min-h-screen bg-blue-200">
@@ -197,22 +212,24 @@ const ContactPage = () => {
               <AccordionTrigger><h1 className='font-semibold'>Category</h1></AccordionTrigger>
               <AccordionContent>
                 {categories.map(category => (
-                  <div className="flex items-center space-x-2" key={category.main_category_name}>
-                    <Checkbox
-                      className="w-6 h-6 border-blue-500 border-2 m-1"
-                      value={category.main_category_name}
-                      onCheckedChange={(checked) => handleCheckboxChange(category.main_category_name, 'main')}
-                      checked={selectedMainCategories.includes(category.main_category_name)}
-                    />
-                    <div className="grid gap-1.5 leading-none">
-                      <label
-                        htmlFor="terms1"
-                        className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
-                      
-                      >
-                        {category.main_category_name}
-                      </label>
+                  <div className="flex items-center justify-between space-x-2" key={category.main_category_name}>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        className="w-6 h-6 border-blue-500 border-2 m-1"
+                        value={category.main_category_name}
+                        onCheckedChange={(checked) => handleCheckboxChange(category.main_category_name, 'main')}
+                        checked={selectedMainCategories.includes(category.main_category_name)}
+                      />
+                      <div className="grid gap-1.5 leading-none">
+                        <label
+                          htmlFor="terms1"
+                          className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                        >
+                          {category.main_category_name}
+                        </label>
+                      </div>
                     </div>
+                    <span className="ml-auto">{mainCategoryCounts[category.main_category_name] || 0}</span>
                   </div>
                 ))}
               </AccordionContent>
@@ -222,22 +239,24 @@ const ContactPage = () => {
               <AccordionTrigger><h1 className='font-semibold'>Sub-Category</h1></AccordionTrigger>
               <AccordionContent>
                 {categories.map(category => (
-                  <div className="flex items-center space-x-2" key={category.sub_category_name}>
-                    <Checkbox
-                      className="w-6 h-6 border-blue-500 border-2 m-1"
-                      value={category.sub_category_name}
-                      onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
-                      checked={selectedSubCategories.includes(category.sub_category_name)}
-                    />
-                    <div className="grid gap-1.5 leading-none">
-                      <label
-                        htmlFor="terms1"
-                        className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
-                      
-                      >
-                        {category.sub_category_name}
-                      </label>
+                  <div className="flex items-center justify-between space-x-2" key={category.sub_category_name}>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        className="w-6 h-6 border-blue-500 border-2 m-1"
+                        value={category.sub_category_name}
+                        onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
+                        checked={selectedSubCategories.includes(category.sub_category_name)}
+                      />
+                      <div className="grid gap-1.5 leading-none">
+                        <label
+                          htmlFor="terms1"
+                          className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                        >
+                          {category.sub_category_name}
+                        </label>
+                      </div>
                     </div>
+                    <span className="ml-auto">{subCategoryCounts[category.sub_category_name] || 0}</span>
                   </div>
                 ))}
               </AccordionContent>
