@@ -14,15 +14,14 @@ const getSheetsData = async (req, res) => {
     const response = await sheets.spreadsheets.values.get({
       auth: authClient,
       spreadsheetId: '1WOJG9S4P2OGyzFIma_QVSEq7tEp0mc56KSlJfPnN0mg',
-      range: 'logos!A:C', // Adjust the range as per your sheet
+      range: 'landing page!A:B', // Adjust the range as per your sheet
     });
 
     const rows = response.data.values;
     if (rows.length) {
       const formattedRows = rows.map((row) => ({
         id: row[0],
-        logoLink: row[1],
-        company: row[2],
+        posterLink: row[1],
       }));
       res.status(200).json(formattedRows);
     } else {

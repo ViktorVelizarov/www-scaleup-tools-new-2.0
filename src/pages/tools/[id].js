@@ -24,13 +24,19 @@ const ToolDetailPage = () => {
           const toolResponse = await fetch(`/api/getAItools/tool/${id}`);
           const tool = await toolResponse.json();
 
+          // Fetch the poster
+          const posterResponse = await fetch('/api/getSheetsData/getPosters');
+          const posters = await posterResponse.json();
+          const posterData = posters.find(sheet => sheet.id === id);
+          const poster = posterData ? posterData.posterLink : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png'; // Default image if no match is found
+
           // Fetch the logo
           const logoResponse = await fetch('/api/getSheetsData/getLogos');
           const logos = await logoResponse.json();
           
           const logoData = logos.find(sheet => sheet.logoLink === id);
 
-          const logo = logoData ? logoData.company : '/default-logo.png'; // Default image if no match is found
+          const logo = logoData ? logoData.company : 'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'; // Default image if no match is found
 
           // Fetch the description
           const descriptionResponse = await fetch('/api/getSheetsData/getDescriptions');
@@ -40,7 +46,7 @@ const ToolDetailPage = () => {
           const description = descriptionData ? descriptionData.description : 'Description not available';
 
           // Combine the data
-          setToolData({ ...tool, logo, description });
+          setToolData({ ...tool, poster, logo, description });
 
           // Fetch all tools for finding similar applications
           const allToolsResponse = await fetch('/api/getAItools/tools');
@@ -85,6 +91,7 @@ const ToolDetailPage = () => {
 
   // Destructure the tool data
   const {
+    poster,
     logo,
     tool_name,
     main_category_name,
@@ -130,7 +137,7 @@ const ToolDetailPage = () => {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row mb-8">
-            <img src="https://images.genai.works/Screenshot_84_2776b067a5.jpg?width=600&height=600&quality=50" alt="Static" className="w-full lg:w-1/3 h-auto object-cover rounded-lg mb-4 lg:mb-0" />
+            <img src={poster} alt="Static" className="w-full lg:w-1/3 h-auto object-cover rounded-lg mb-4 lg:mb-0" />
             <div className="lg:ml-8 flex-grow">
               <div className="mb-4 flex flex-col lg:flex-col">
                 <div className="flex-1">

@@ -262,7 +262,7 @@ const ContactPage = () => {
                 currentTools.map((tool, index) => {
                   // Find the matching logo from sheetsData
                   const matchingSheetData = sheetsData.find(sheet => sheet.logoLink === tool.tool_id.toString());
-                  const imgSrc = matchingSheetData ? matchingSheetData.company : 'https://via.placeholder.com/51'; // Default image if no match is found
+                  const imgSrc = matchingSheetData ? matchingSheetData.company : 'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'; // Default image if no match is found
 
                   // Find the description from toolDescriptions based on tool_id
                   const descriptionData = toolDescriptions.find(description => description.tool_id === tool.tool_id.toString());
