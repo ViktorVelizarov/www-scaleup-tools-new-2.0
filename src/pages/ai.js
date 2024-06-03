@@ -27,10 +27,10 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         </div>
         {pricing && <div className="self-start mt-2.5 text-base font-extralight text-center">{pricing}</div>}
       </div>
-      <div className="mt-2 text-sm font-light text-gray-600">
-        <div>Main Category: {mainCategory}</div>
-        <div>Sub Category: {subCategory}</div>
-      </div>
+      <div className="flex mt-1 space-x-2">
+                  <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{mainCategory}</span>
+                  <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{subCategory}</span>
+                </div>
       <div className="mt-6 text-base font-extralight overflow-hidden overflow-ellipsis">
         {truncatedDescription}
       </div>
@@ -175,64 +175,76 @@ const ContactPage = () => {
       <AIToolsLayout>
         <div className="flex flex-col min-h-screen bg-blue-200">
           <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://i.pinimg.com/originals/32/b8/77/32b877ed4aa7778cc7d43ebb7d95a6f1.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-            <h1 className="text-5xl font-bold text-center text-black max-md:max-w-full max-md:text-4xl mt-32">Find AI tools for all types of use cases</h1>
-<form className="flex justify-center items-start px-3.5 py-4 mt-16 max-w-full text-2xl font-extralight text-black bg-white rounded-xl border border-black border-solid shadow-sm w-[750px] max-md:pr-5 max-md:mt-10">
-<label className="sr-only" htmlFor="toolInput">Enter a tool name</label>
-<input className="w-full bg-transparent border-none outline-none" type="text" id="toolInput" placeholder="Enter a tool name...." aria-label="Enter a tool name...." />
-</form>
-</header>
-<div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-blue-200">
-        <div className="md:col-span-1 p-14">
-          <div className="self-start pr-10">
+                    <h1 className="text-5xl font-bold text-center text-black max-md:max-w-full max-md:text-4xl mt-32">Find AI tools for all types of use cases</h1>
+                    <form className="flex justify-center items-start px-3.5 py-4 mt-16 max-w-full text-2xl font-extralight text-black bg-white rounded-xl border border-black border-solid shadow-sm w-[750px] max-md:pr-5 max-md:mt-10">
+                    <label className="sr-only" htmlFor="toolInput">Enter a tool name</label>
+                    <input className="w-full bg-transparent border-none outline-none" type="text" id="toolInput" placeholder="Enter a tool name...." aria-label="Enter a tool name...." />
+                    </form>
+          </header>
+<div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-blue-200 ml-16">
+        <div className="md:col-span-1 pt-14 pl-14">
+          <div className="self-start ">
             <section>
-              <h2 className="text-2xl font-bold mb-4 ml-2 text-black">Filters <button onClick={handleResetFilters} className="ml-5 bg-gray-200 text-black px-1 py-1 rounded-lg"><IoIosRefresh /></button></h2>
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>Categories</AccordionTrigger>
-                  <AccordionContent>
-                    {categories.map(category => (
-                      <div className="items-top flex space-x-2" key={category.main_category_name}>
-                        <Checkbox
-                          value={category.main_category_name}
-                          onCheckedChange={(checked) => handleCheckboxChange(category.main_category_name, 'main')}
-                          checked={selectedMainCategories.includes(category.main_category_name)}
-                        />
-                        <div className="grid gap-1.5 leading-none">
-                          <label
-                            htmlFor="terms1"
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {category.main_category_name}
-                          </label>
-                        </div>
-                      </div>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                  <AccordionTrigger>Subcategories</AccordionTrigger>
-                  <AccordionContent>
-                    {categories.map(category => (
-                      <div className="items-top flex space-x-2" key={category.sub_category_name}>
-                        <Checkbox
-                          value={category.sub_category_name}
-                          onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
-                          checked={selectedSubCategories.includes(category.sub_category_name)}
-                        />
-                        <div className="grid gap-1.5 leading-none">
-                          <label
-                            htmlFor="terms2"
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            {category.sub_category_name}
-                          </label>
-                        </div>
-                      </div>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-black">Filters</h2>
+              <button onClick={handleResetFilters} className="bg-blue-400 text-black px-1 py-1 rounded-lg">
+                <IoIosRefresh />
+              </button>
+            </div>
+
+              <Accordion type="multiple" collapsible defaultValue={["item-1" , "item-2", "item-3"]}>
+              <AccordionItem value="item-1">
+              <AccordionTrigger><h1 className='font-semibold'>Category</h1></AccordionTrigger>
+              <AccordionContent>
+                {categories.map(category => (
+                  <div className="flex items-center space-x-2" key={category.main_category_name}>
+                    <Checkbox
+                      className="w-6 h-6 border-blue-500 border-2 m-1"
+                      value={category.main_category_name}
+                      onCheckedChange={(checked) => handleCheckboxChange(category.main_category_name, 'main')}
+                      checked={selectedMainCategories.includes(category.main_category_name)}
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                      <label
+                        htmlFor="terms1"
+                        className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                      
+                      >
+                        {category.main_category_name}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-2">
+              <AccordionTrigger><h1 className='font-semibold'>Sub-Category</h1></AccordionTrigger>
+              <AccordionContent>
+                {categories.map(category => (
+                  <div className="flex items-center space-x-2" key={category.sub_category_name}>
+                    <Checkbox
+                      className="w-6 h-6 border-blue-500 border-2 m-1"
+                      value={category.sub_category_name}
+                      onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
+                      checked={selectedSubCategories.includes(category.sub_category_name)}
+                    />
+                    <div className="grid gap-1.5 leading-none">
+                      <label
+                        htmlFor="terms1"
+                        className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                      
+                      >
+                        {category.sub_category_name}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+
                 <AccordionItem value="item-3">
-                  <AccordionTrigger>Price</AccordionTrigger>
+                  <AccordionTrigger><h1 className='font-semibold'>Price</h1></AccordionTrigger>
                   <AccordionContent>
                     <div>
                       <div className="flex items-center">
