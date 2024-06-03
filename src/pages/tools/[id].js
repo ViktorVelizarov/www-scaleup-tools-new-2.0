@@ -7,6 +7,9 @@ import { AiFillInstagram } from "react-icons/ai";
 import { GrTwitter } from "react-icons/gr";
 import { BsLinkedin } from "react-icons/bs";
 import { IoLogoYoutube } from "react-icons/io";
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
+
 
 const ToolDetailPage = () => {
   const router = useRouter();
@@ -114,13 +117,18 @@ const ToolDetailPage = () => {
         <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-32 pt-28">
           <div className="flex items-center mb-8">
             <a href="/ai" className="text-blue-500 hover:underline">
-              <span className="hidden sm:inline">AI Tools</span>
-              <span className="sm:hidden">&lt; Back</span>
+              <span className="hidden sm:inline font-semibold mr-3">AI Tools</span>
+              <div className='flex flex-row'>
+              <span className="sm:hidden font-semibold mr-2 mt-1"><FaArrowLeft/></span>
+              <span className="sm:hidden font-semibold"> Back</span>
+              </div>
             </a>
-            <span className="hidden sm:inline"> &gt; {tool_name}</span>
+            <span className="hidden sm:inline font-semibold mr-3 "><FaArrowRight /></span>
+            <span className="hidden sm:inline font-semibold ">  {tool_name}</span>
           </div>
           <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start mb-8">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center mb-4 lg:mb-0 w-full">
+
+            <div className="flex  flex-row  items-center lg:mb-0 mb-4 w-full">
               <img src={logo} alt={tool_name} className="w-16 h-16 mr-4" />
               <div>
                 <h1 className="text-2xl lg:text-3xl font-bold">{tool_name}</h1>
