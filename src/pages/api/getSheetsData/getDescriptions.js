@@ -13,7 +13,7 @@ const getToolDescriptions = async (req, res) => {
 
     // Specify the spreadsheetId and range to fetch data from
     const spreadsheetId = '19NSpjRMRGzJ-wWf1icdE4tl2-svXkFlbDr-2Fv4CpWk';
-    const range = 'Filtered!B:J'; // Adjust the range as per your sheet
+    const range = 'Filtered!B:P'; // Adjust the range as per your sheet
 
     // Fetch data from Google Sheets
     const response = await sheets.spreadsheets.values.get({
@@ -28,6 +28,9 @@ const getToolDescriptions = async (req, res) => {
       const formattedRows = rows.map((row) => ({
         tool_id: row[0], // Assuming Tool ID is in the first column (B)
         description: row[8], // Assuming Description is in the seventh column (H)
+        twitter: row[9],
+        facebook: row[10],
+        
       }));
       res.status(200).json(formattedRows);
     } else {

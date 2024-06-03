@@ -15,19 +15,11 @@ import {
 } from "@/components/ui/accordion";
 
 function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory }) {
-  // Function to get the first sentence from a description
-  const getFirstSentence = (text) => {
-    // Split the text into sentences by periods
-    const sentences = text.split('.');
-    // Return the first sentence
-    return sentences[0];
-  };
-
   // Ensure description is not too long
-  const truncatedDescription = description ? getFirstSentence(description) : 'Description not available';
+  const truncatedDescription = description ? description.split('. ')[0] : 'Description not available';
 
   return (
-    <article className="flex flex-col px-4 pt-4 pb-8 mt-5 w-full bg-white rounded-xl max-md:pr-5">
+    <article className="flex flex-col px-4 pt-4 pb-8 mt-5 w-full bg-white rounded-xl max-md:pr-5 h-64">
       <div className="flex gap-5 justify-between w-full">
         <div className="flex gap-5 justify-between text-xl font-bold">
           <img loading="lazy" src={imgSrc} alt={title} className="shrink-0 aspect-[1.09] w-[51px]" />
@@ -39,7 +31,9 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         <div>Main Category: {mainCategory}</div>
         <div>Sub Category: {subCategory}</div>
       </div>
-      <div className="mt-6 text-base font-extralight">{truncatedDescription}</div>
+      <div className="mt-6 text-base font-extralight overflow-hidden overflow-ellipsis">
+        {truncatedDescription}
+      </div>
     </article>
   );
 }
@@ -268,7 +262,7 @@ const ContactPage = () => {
                 currentTools.map((tool, index) => {
                   // Find the matching logo from sheetsData
                   const matchingSheetData = sheetsData.find(sheet => sheet.logoLink === tool.tool_id.toString());
-                  const imgSrc = matchingSheetData ? matchingSheetData.company : 'https://drive.google.com/thumbnail?id=14oNa28IadyCxm6my_h4fBon5NhBsUVj3'; // Default image if no match is found
+                  const imgSrc = matchingSheetData ? matchingSheetData.company : 'https://via.placeholder.com/51'; // Default image if no match is found
 
                   // Find the description from toolDescriptions based on tool_id
                   const descriptionData = toolDescriptions.find(description => description.tool_id === tool.tool_id.toString());
