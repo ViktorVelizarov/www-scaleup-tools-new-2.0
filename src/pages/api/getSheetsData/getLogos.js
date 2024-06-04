@@ -13,20 +13,20 @@ const getSheetsData = async (req, res) => {
 
     const response = await sheets.spreadsheets.values.get({
       auth: authClient,
-      spreadsheetId: '19NSpjRMRGzJ-wWf1icdE4tl2-svXkFlbDr-2Fv4CpWk',
-      range: 'Filtered!B:P', // Adjust the range as per your sheet
+      spreadsheetId: '1WOJG9S4P2OGyzFIma_QVSEq7tEp0mc56KSlJfPnN0mg',
+      range: 'logos!A:C', // Adjust the range as per your sheet
     });
 
     const rows = response.data.values;
     if (rows.length) {
       const formattedRows = rows.map((row) => ({
         id: row[0],
-        description: row[8], 
+        company: row[2],
       }));
       res.status(200).json(formattedRows);
     } else {
       res.status(200).json([]);
-    }  
+    }
   } catch (error) {
     console.error('Error fetching data from Google Sheets:', error);
     res.status(500).json({ error: 'Failed to fetch data' });
