@@ -21,12 +21,12 @@ const getSheetsData = async (req, res) => {
     if (rows.length) {
       const formattedRows = rows.map((row) => ({
         id: row[0],
-        description: row[7], 
+        description: row[8], 
       }));
       res.status(200).json(formattedRows);
     } else {
       res.status(200).json([]);
-    }
+    }  
   } catch (error) {
     console.error('Error fetching data from Google Sheets:', error);
     res.status(500).json({ error: 'Failed to fetch data' });
