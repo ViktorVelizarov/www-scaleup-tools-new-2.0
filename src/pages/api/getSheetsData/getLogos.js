@@ -20,7 +20,7 @@ const getSheetsData = async (req, res) => {
     const rows = response.data.values;
     if (rows.length) {
       const formattedRows = rows.map((row) => ({
-        id: row[0],
+        logoLink: row[1],
         company: row[2],
       }));
       res.status(200).json(formattedRows);
