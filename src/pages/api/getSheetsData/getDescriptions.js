@@ -12,7 +12,7 @@ const getToolDescriptions = async (req, res) => {
     const response = await sheets.spreadsheets.values.get({
       auth: authClient,
       spreadsheetId: '19NSpjRMRGzJ-wWf1icdE4tl2-svXkFlbDr-2Fv4CpWk',
-      range: 'Filtered!B:P', // Adjust the range as per your sheet
+      range: 'Filtered!B:P', 
     });
 
 
@@ -28,7 +28,7 @@ const getToolDescriptions = async (req, res) => {
     }
   } catch (error) {
     console.error('Error fetching data from Google Sheets:', error);
-    res.status(500).json({ error: 'Failed to fetch data' });
+    res.status(500).json({ error: 'Failed to fetch data', details: error.message });
   }
 };
 
