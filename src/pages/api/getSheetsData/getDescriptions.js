@@ -1,28 +1,26 @@
 import { google } from 'googleapis';
 import path from 'path';
 
-const getSheetsData = async (req, res) => {
+const getToolDescriptions = async (req, res) => {
   try {
     const sheets = google.sheets('v4');
     const auth = new google.auth.GoogleAuth({
-      keyFile: path.join(process.cwd(), 'lib/serviceaccount.json'), // Adjust the path as needed
+      keyFile: path.join(process.cwd(), 'lib/serviceaccount.json'), 
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });
-
     const authClient = await auth.getClient();
-
     const response = await sheets.spreadsheets.values.get({
       auth: authClient,
-      spreadsheetId: '1WOJG9S4P2OGyzFIma_QVSEq7tEp0mc56KSlJfPnN0mg',
-      range: 'logos!A:C', // Adjust the range as per your sheet
+      spreadsheetId: '19NSpjRMRGzJ-wWf1icdE4tl2-svXkFlbDr-2Fv4CpWk',
+      range: 'Filtered!B:P', // Adjust the range as per your sheet
     });
+
 
     const rows = response.data.values;
     if (rows.length) {
       const formattedRows = rows.map((row) => ({
-        id: row[0],
-        logoLink: row[1],
-        company: row[2],
+        tool_id: row[0], 
+        description: row[8], 
       }));
       res.status(200).json(formattedRows);
     } else {
@@ -34,4 +32,4 @@ const getSheetsData = async (req, res) => {
   }
 };
 
-export default getSheetsData;
+export default getToolDescriptions;
