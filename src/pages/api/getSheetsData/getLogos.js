@@ -21,6 +21,7 @@ const getSheetsData = async (req, res) => {
     if (rows.length) {
       const formattedRows = rows.map((row) => ({
         id: row[0],
+        description: row[7], 
       }));
       res.status(200).json(formattedRows);
     } else {
