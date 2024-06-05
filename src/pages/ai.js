@@ -35,7 +35,7 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
     </article>
   );
 }
-
+  
 const ContactPage = () => {
   const [toolData, setToolData] = useState([]);
   const [sheetsData, setSheetsData] = useState([]);

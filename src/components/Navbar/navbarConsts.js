@@ -1,8 +1,8 @@
 export const navigationLinks = [
   { title: 'HOME', link: '/' },
-  { title: 'SCALEUP TOOLS', link: '/#in-house-tools' },
-  { title: '100+ OTHER', link: '/#external-tools' },
-  // { title: 'PRICING', link: '/#pricing' },
-  // { title: 'CAREER', link: '/career' },
-  { title: 'CONTACT', link: '/contact' },
+  { title: 'AI APPLICATIONS', link: '/ai' },
+  { title: 'GPT TOOLS', link: '/' },
+  { title: 'AI TRENDS', link: '/trends' },
+  { title: 'EVENTS', link: '/' },
+  { title: 'CONTACTS', link: '/contact' },
 ];
