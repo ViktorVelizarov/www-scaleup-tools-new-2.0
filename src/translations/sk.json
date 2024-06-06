@@ -1,8 +1,28 @@
 {
     "contact": "KONTAKT",
     "back": "SPÄŤ",
-    "get_in_touch": "Neváhajte nás kontaktovať, dohodnite si rozhovor a pomôžeme vám s rozvojom vášho podnikania.",
+    "get_in_touch": "Kontaktujte nás, dohodnite si rozhovor a poďme rozšíriť vaše podnikanie.",
     "accessible_question": "Je to prístupné?",
-    "accessible_answer": "Áno. Riadi sa návrhovým vzorom WAI-ARIA.",
-    "where_we_can_meet": "KDE SA MÔŽEME STRETNÚŤ"
+    "accessible_answer": "Áno. Dodržuje dizajnový vzor WAI-ARIA.",
+    "where_we_can_meet": "KDE SA MÔŽEME STRETNÚŤ",
+    "scaleup_tools": "NÁSTROJE SCALEUP",
+    "tools_intro": "Odomknite nový potenciál inovácií a automatizácie s naším súborom štyroch výnimočných interných softvérových riešení. Zefektívnite:",
+    "market_discovery": "prieskum trhu",
+    "lead_generation": "generovanie kontaktov",
+    "talent_sourcing": "hľadanie talentov",
+    "onboarding": "zaškolenie",
+    "personal_development": "osobný rozvoj",
+    "share_knowledge": "alebo zdieľajte znalosti prostredníctvom našej vzdelávacej webovej platformy...",
+    "tools_outro": "Čoskoro budete mať prístup k týmto prelomovým nástrojom aj externé! Zvedaví, aby ste sa dozvedeli viac a vyskúšali ich? Kontaktujte nás teraz!",
+    "interested_in_tools": "Zaujímajú vás nástroje SCALEUP?",
+    "tools_cta": "Naplánujte si rýchle úvodné stretnutie a preskúmajme, ako vám môžu pomôcť zrýchliť vaše podnikanie a rozvíjať vaše talenty.",
+    "other_tools": "100+ ĎALŠÍCH",
+    "tools_intro_other": "SCALEUP má odborné znalosti v oblasti viac ako 100 cloudových a AI-nástrojov. Každý týždeň pridávame do našich zoznamov nové nástroje a radi sa podelíme o naše poznatky a prípadne vás rýchlo zaškolíme na akýkoľvek z uvedených nástrojov. Neztrácajte čas so zaškolením a nastavením, získajte profesionála, ktorý maximalizuje váš úžitok z akéhokoľvek nástroja alebo ich kombinácie.",
+    "filter": "Filter",
+    "all_tools": "Všetky nástroje",
+    "and_more": "a viac...",
+    "loading": "Načítavam...",
+    "interested_in_training": "Máte záujem o rýchle zaškolenie?",
+    "training_cta": "Naplánujte si rýchle úvodné stretnutie a preskúmajme, ako vám môžeme pomôcť urýchliť vaše zaškolenie na akýkoľvek uvedený nástroj alebo len doladiť."
   }
+  
