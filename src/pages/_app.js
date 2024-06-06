@@ -4,6 +4,8 @@ import { SessionProvider } from "next-auth/react";
 import { getCookie } from "cookies-next";
 import Script from "next/script";
 
+import DefaultLayout from '@/Layouts/DefaultLayout';
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
@@ -55,7 +57,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             />
           </>
         )}
+          <DefaultLayout>
         <Component {...pageProps} />
+        </DefaultLayout>
       </SessionProvider>
     </SessionProvider>
   );

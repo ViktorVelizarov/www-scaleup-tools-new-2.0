@@ -29,7 +29,7 @@ export async function getStaticProps({req, res}) {
 export default function Home({tools, tags}){
 
   return (
-    <DefaultLayout>
+<>
       <Header />
       <Tools tags={tags} tools={tools} />
       {/* <Pricing /> */}
@@ -37,6 +37,6 @@ export default function Home({tools, tags}){
         selectedItem={{ selectedItem, setSelectedItem }}
         options={options}
       /> */}
-    </DefaultLayout>
+</>
   );
 };

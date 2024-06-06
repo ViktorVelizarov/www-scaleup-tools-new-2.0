@@ -193,7 +193,7 @@ const ContactPage = () => {
   });
 
   return (
-    <AIToolsLayout>
+
       <div className="flex flex-col min-h-screen bg-blue-200">
         <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://i.pinimg.com/originals/32/b8/77/32b877ed4aa7778cc7d43ebb7d95a6f1.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
           <h1 className="text-4xl font-bold text-center text-black max-w-full mt-10 md:text-5xl pt-16">Explore AI Applications</h1>
@@ -455,7 +455,6 @@ const ContactPage = () => {
           </div>
         </div>
       </div>
-    </AIToolsLayout>
   );
 }
 
