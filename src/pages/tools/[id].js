@@ -10,6 +10,16 @@ import { IoLogoYoutube } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 
+// Import translations
+import enTranslations from '@/translations/en.json';
+import skTranslations from '@/translations/sk.json';
+import czTranslations from '@/translations/cz.json';
+
+const translations = {
+  en: enTranslations,
+  sk: skTranslations,
+  cz: czTranslations,
+};
 
 const ToolDetailPage = ({ selectedLanguage }) => {
   const router = useRouter();
@@ -18,8 +28,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
   const [similarTools, setSimilarTools] = useState([]);
   const [loading, setLoading] = useState(true);
   const t = (key) => translations[selectedLanguage]?.[key] || key; // Translation function
-  console.log("selectedLanguage")
-  console.log(selectedLanguage)
+
   useEffect(() => {
     if (id) {
       // Fetch tool data based on the id
@@ -119,7 +128,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
         <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-32 pt-28">
           <div className="flex items-center mb-8">
             <a href="/ai" className="text-blue-500 hover:underline">
-              <span className="hidden sm:inline font-semibold mr-3">AI Tools</span>
+              <span className="hidden sm:inline font-semibold mr-3">{t('ai_tools')}</span>
               <div className='flex flex-row'>
               <span className="sm:hidden font-semibold mr-2 mt-1"><FaArrowLeft/></span>
               <span className="sm:hidden font-semibold"> Back</span>
@@ -142,7 +151,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
             </div>
             <div className="w-full lg:w-auto">
               <a href={url} target="_blank" rel="noopener noreferrer" className="bg-blue-500 text-white w-full lg:w-max block text-center px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 mb-4">
-                Try Me
+              {t('try_me')}
               </a>
             </div>
           </div>
@@ -151,11 +160,11 @@ const ToolDetailPage = ({ selectedLanguage }) => {
             <div className="lg:ml-8 flex-grow">
               <div className="mb-4 flex flex-col lg:flex-col">
                 <div className="flex-1">
-                  <label className="block text-xl font-bold mb-1">Price</label>
+                  <label className="block text-xl font-bold mb-1">{t('price')}</label>
                   <span className="block text-lg">{Free_version ? 'Free' : 'Paid'}</span>
                 </div>
                 <div className="flex-1 mt-4 lg:mt-0">
-                  <label className="block text-xl font-bold mb-1 lg:mt-6">Company</label>
+                  <label className="block text-xl font-bold mb-1 lg:mt-6">{t('company')}</label>
                   <span className="block text-lg">{company_name}</span>
                 </div>
               </div>
@@ -212,11 +221,11 @@ const ToolDetailPage = ({ selectedLanguage }) => {
             </div>
           </div>
           <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">About {tool_name}</h2>
+            <h2 className="text-2xl font-bold mb-4">{t('about')} {tool_name}</h2>
             <p className="text-lg" dangerouslySetInnerHTML={{ __html: description }}></p>
           </div>
           <div>
-            <h2 className="text-2xl font-bold mb-4">Similar Tools:</h2>
+            <h2 className="text-2xl font-bold mb-4">{t('similar_tools')}:</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {similarTools.map((tool) => (
                 <div key={tool.tool_id} className="bg-white p-4 rounded-lg shadow-md">

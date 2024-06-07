@@ -49,6 +49,14 @@
     "navigation_gpt_tools": "GPT NÁSTROJE",
     "navigation_ai_trends": "AI TRENDY",
     "navigation_events": "UDÁLOSTI",
-    "navigation_contacts": "KONTAKTY"
+    "navigation_contacts": "KONTAKTY",
+
+    "ai_tools": "Nástroje AI",
+    "tool_name": "Název nástroje",
+    "company": "Společnost",
+    "about": "O nástroji",
+    "similar_tools": "Podobné nástroje",
+    "tool_not_found": "Nástroj nebyl nalezen.",
+    "try_me": "Vyzkoušet mě"
 }
   

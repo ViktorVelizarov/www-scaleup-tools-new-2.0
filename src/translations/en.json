@@ -49,7 +49,14 @@
     "navigation_gpt_tools": "GPT TOOLS",
     "navigation_ai_trends": "AI TRENDS",
     "navigation_events": "EVENTS",
-    "navigation_contacts": "CONTACTS"
+    "navigation_contacts": "CONTACTS",
 
+    "ai_tools": "AI Tools",
+    "tool_name": "Tool Name",
+    "company": "Company",
+    "about": "About",
+    "similar_tools": "Similar Tools",
+    "tool_not_found": "Tool not found.",
+    "try_me": "Try me"
 }
   
