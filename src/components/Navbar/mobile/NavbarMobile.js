@@ -1,15 +1,40 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { navigationLinks } from '../navbarConsts';
 import { useEffect, useState } from 'react';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import NavigationLink from '../NavigationLink/NavigationLink';
+import LanguageDropdown from '../LanguageDropdown'; // Adjust the import path as needed
 
-const NavbarMobile = () => {
+// Import translations
+import enTranslations from '@/translations/en.json';
+import skTranslations from '@/translations/sk.json';
+import czTranslations from '@/translations/cz.json';
+
+const translations = {
+  en: enTranslations,
+  sk: skTranslations,
+  cz: czTranslations,
+};
+
+const NavbarMobile = ({ selectedLanguage, setSelectedLanguage }) => {
   const [nav, setNav] = useState(false);
   const [bgColor, setBgColor] = useState();
   const [textColor, setTextColor] = useState();
   const [logoColor, setLogoColor] = useState();
+  const t = (key) => translations[selectedLanguage][key] || key; // Translation function
+
+  const navigationLinks = [
+    { title: t('navigation_home'), link: '/' },
+    { title: t('navigation_ai_applications'), link: '/ai' },      
+    { title: t('navigation_gpt_tools'), link: '/' },
+    { title: t('navigation_ai_trends'), link: '/trends' },
+    { title: t('navigation_events'), link: '/' },
+    { title: t('navigation_contacts'), link: '/contact' },
+  ];
+
+  const handleLanguageChange = (e) => {
+    setSelectedLanguage(e.target.value);
+  };
 
   useEffect(() => {
     const changeColor = () => {
@@ -48,12 +73,18 @@ const NavbarMobile = () => {
         </Link>
 
         {/* Mobile Button */}
-        <div className='block md:hidden z-10 ' onClick={handleNav}>
-          {nav ? (
+        
+        <div className=' md:hidden z-10 flex flex-row' >
+        <LanguageDropdown value={selectedLanguage} onChange={handleLanguageChange} />
+        <div className='pl-3' onClick={handleNav}>
+        {nav ? (
             <AiOutlineClose className='text-white' size={30} />
           ) : (
             <AiOutlineMenu className={`${textColor}`} size={30} />
           )}
+          
+        </div>
+          
         </div>
         {/* Mobile Menu */}
         <div

@@ -42,7 +42,14 @@
     "footer_locations_title": "OUR LOCATIONS",
     "footer_contact_title": "GET IN TOUCH",
     "footer_privacy_policy": "Privacy Policy",
-    "footer_cookies_policy": "Cookies Policy"
+    "footer_cookies_policy": "Cookies Policy",
     
+    "navigation_home": "HOME",
+    "navigation_ai_applications": "AI APPLICATIONS",
+    "navigation_gpt_tools": "GPT TOOLS",
+    "navigation_ai_trends": "AI TRENDS",
+    "navigation_events": "EVENTS",
+    "navigation_contacts": "CONTACTS"
+
 }
   

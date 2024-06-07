@@ -42,6 +42,13 @@
     "footer_locations_title": "NAŠE POBOČKY",
     "footer_contact_title": "KONTAKTUJTE NÁS",
     "footer_privacy_policy": "Zásady ochrany osobných údajov",
-    "footer_cookies_policy": "Zásady používania súborov cookie"
+    "footer_cookies_policy": "Zásady používania súborov cookie",
+
+    "navigation_home": "DOMOV",
+    "navigation_ai_applications": "AI APLIKÁCIE",
+    "navigation_gpt_tools": "GPT NÁSTROJE",
+    "navigation_ai_trends": "AI TRENDY",
+    "navigation_events": "PODUJATIA",
+    "navigation_contacts": "KONTAKTY"
 }
   

@@ -5,14 +5,18 @@ import Image from 'next/image';
 import LanguageDropdown from '../LanguageDropdown'; // Adjust the import path as needed
 import NavigationLink from '../NavigationLink/NavigationLink';
 
-export const navigationLinks = [
-  { title: 'HOME', link: '/' },
-  { title: 'AI APPLICATIONS', link: '/ai' },
-  { title: 'GPT TOOLS', link: '/' },
-  { title: 'AI TRENDS', link: '/trends' },
-  { title: 'EVENTS', link: '/' },
-  { title: 'CONTACTS', link: '/contact' },
-];
+
+
+// Import translations
+import enTranslations from '@/translations/en.json';
+import skTranslations from '@/translations/sk.json';
+import czTranslations from '@/translations/cz.json';
+
+const translations = {
+  en: enTranslations,
+  sk: skTranslations,
+  cz: czTranslations,
+};
 
 const NavbarDesktop = ({ selectedLanguage, setSelectedLanguage }) => {
   const [bgColor, setBgColor] = useState();
@@ -20,6 +24,16 @@ const NavbarDesktop = ({ selectedLanguage, setSelectedLanguage }) => {
   const [logoColor, setLogoColor] = useState();
   const [hoverColor, setHoverColor] = useState();
   const [padding, setPadding] = useState();
+  const t = (key) => translations[selectedLanguage][key] || key; // Translation function
+
+  const navigationLinks = [
+    { title: t('navigation_home'), link: '/' },
+    { title: t('navigation_ai_applications'), link: '/ai' },      
+    { title: t('navigation_gpt_tools'), link: '/' },
+    { title: t('navigation_ai_trends'), link: '/trends' },
+    { title: t('navigation_events'), link: '/' },
+    { title: t('navigation_contacts'), link: '/contact' },
+  ];
 
   const handleLanguageChange = (e) => {
     setSelectedLanguage(e.target.value);
