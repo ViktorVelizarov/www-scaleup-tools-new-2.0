@@ -1,7 +1,7 @@
 import DefaultLayout from '@/Layouts/DefaultLayout';
 import EditorData from '../../utils/models/opsModel';
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.bubble.css';
+
 import Link from 'next/link';
 import Head from 'next/head';
 
