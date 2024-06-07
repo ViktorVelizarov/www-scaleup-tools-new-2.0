@@ -1,7 +1,6 @@
 // pages/contact.js
 import { useState } from 'react';
 import Link from 'next/link';
-import Form from '@/components/Form/Form';
 import ContactCard from '@/components/ContactCard/ContactCard';
 import { contactCardInfo } from '@/components/ContactCard/cardConsts';
 import Head from 'next/head';

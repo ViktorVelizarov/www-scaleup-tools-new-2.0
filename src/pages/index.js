@@ -41,7 +41,7 @@ export default function Home({ tools, tags, selectedLanguage }) {
 
   return (
     <>
-      <Header />
+      <Header selectedLanguage={selectedLanguage}/>
       <Tools tags={tags} tools={tools} selectedLanguage={selectedLanguage} />
       {/* <Pricing /> */}
       {/* <Form

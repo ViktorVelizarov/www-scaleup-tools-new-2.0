@@ -1,7 +1,18 @@
 import { IoIosArrowDown } from 'react-icons/io';
 import Link from 'next/link';
 
-const Header = () => {
+import enTranslations from '@/translations/en.json';
+import skTranslations from '@/translations/sk.json';
+import czTranslations from '@/translations/cz.json';
+
+const translations = {
+  en: enTranslations,
+  sk: skTranslations,
+  cz: czTranslations,
+};
+
+const Header = ({ selectedLanguage }) => {
+  const t = (key) => translations[selectedLanguage]?.[key] || key; // Translation function
   return (
     <div
       id='home'
@@ -13,7 +24,7 @@ const Header = () => {
             <strong>SCALEUP.TOOLS</strong>
           </h1>
           <div className='font-bold text-[1rem] text-white'>
-            <p>Get advancement and automate your work with SCALEUP tools</p>
+            <p>{t('header_text')}</p>
           </div>
           <div className="flex flex-col sm:flex-row">
             <div className="left-0 mr-[20px] mt-[30px] -bottom-40 sm:-bottom-32 md:-bottom-40 lg:-bottom-20 xl:-bottom-20 2xl:-bottom-20 gap-5 inline-block">
@@ -22,7 +33,7 @@ const Header = () => {
                 scroll={false}
                 className="border-gray-5 text-gray-50 bg-transparent transition text-primary-blue text-md cursor-pointer border-2 rounded-md px-6 py-2 font-bold hover:text-accent-orange hover:bg-white ease-in duration-100"
               >
-                EXPLORE OUR TOOLS
+                {t('explore_tools')}
               </Link>
             </div>
             {/* <div className="left-0 mt-[30px] -bottom-40 sm:-bottom-32 md:-bottom-40 lg:-bottom-20 xl:-bottom-20 2xl:-bottom-20 gap-5 inline-block">
