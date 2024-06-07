@@ -12,6 +12,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useTranslation } from 'next-i18next';
+
 
 function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory, toolId, postersData }) {
   const truncatedDescription = description ? description.split('. ')[0] : 'Description not available';
@@ -43,9 +45,18 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
   );
 }
 
+// Import translations
+import enTranslations from '@/translations/en.json';
+import skTranslations from '@/translations/sk.json';
+import czTranslations from '@/translations/cz.json';
 
+const translations = {
+  en: enTranslations,
+  sk: skTranslations,
+  cz: czTranslations,
+};
   
-const ContactPage = () => {
+const ContactPage = ({ selectedLanguage }) => {
   const [toolData, setToolData] = useState([]);
   const [sheetsData, setSheetsData] = useState([]);
   const [toolDescriptions, setToolDescriptions] = useState([]);
@@ -60,6 +71,7 @@ const ContactPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showFiltersPopup, setShowFiltersPopup] = useState(false); // State for showing filters popup
   const [postersData, setPostersData] = useState([]);
+  const t = (key) => translations[selectedLanguage][key] || key; // Translation function
 
   useEffect(() => {
     const fetchSheetsData = async () => {
@@ -217,10 +229,10 @@ const ContactPage = () => {
 
       <div className="flex flex-col min-h-screen bg-gray-100">
         <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://t4.ftcdn.net/jpg/02/44/35/67/360_F_244356708_9sarXrMLZEEMAI2KKt3on8x1mCgfQKrQ.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-          <h1 className="text-4xl font-bold text-center text-white max-w-full mt-10 md:text-5xl pt-16">Explore AI Applications</h1>
-          <p className="text-xl text-center text-white mt-4 max-w-full md:text-2xl">Discover a World of Intelligent Solutions for Every Need</p>
+          <h1 className="text-4xl font-bold text-center text-white max-w-full mt-10 md:text-5xl pt-16">{t('explore_ai_applications')}</h1>
+          <p className="text-xl text-center text-white mt-4 max-w-full md:text-2xl">{t('discover_intelligent_solutions')}</p>
           <form className="flex justify-center items-start px-3.5 py-4 mt-8 max-w-full text-2xl font-extralight text-black bg-white rounded-3xl border  border-solid shadow-sm w-[700px] max-md:pr-5 max-md:mt-10">
-            <label className="sr-only" htmlFor="toolInput">Enter a tool name</label>
+            <label className="sr-only" htmlFor="toolInput">{t('enter_tool_name')}</label>
             <input
               className="w-full bg-transparent border-none outline-none text-xl"
               type="text"
@@ -254,7 +266,7 @@ const ContactPage = () => {
             <div className="self-start border-orange-500 border-2 rounded-lg p-4 bg-white">
               <section >
                 <div className="flex justify-between items-center mb-4 hidden md:flex ">
-                  <h2 className="text-2xl font-bold text-black">Filters</h2>
+                  <h2 className="text-2xl font-bold text-black">{t('filters')}</h2>
                   <button onClick={handleResetFilters} className="bg-orange-400 text-black px-1 py-1 rounded-lg">
                     <IoIosRefresh className='text-white'/>
                   </button>
@@ -270,7 +282,7 @@ const ContactPage = () => {
                       </div>
                       <Accordion type="multiple" collapsible defaultValue={["item-1", "item-2", "item-3"]}>
                         <AccordionItem value="item-1">
-                          <AccordionTrigger><h1 className='font-semibold'>Category</h1></AccordionTrigger>
+                          <AccordionTrigger><h1 className='font-semibold'>{t('category')}</h1></AccordionTrigger>
                           <AccordionContent>
                             {categories.map(category => (
                               <div className="flex items-center justify-between space-x-2" key={category.main_category_name}>
@@ -297,7 +309,7 @@ const ContactPage = () => {
                         </AccordionItem>
 
                         <AccordionItem value="item-2">
-                          <AccordionTrigger><h1 className='font-semibold'>Sub-Category</h1></AccordionTrigger>
+                          <AccordionTrigger><h1 className='font-semibold'>{t('sub_category')}</h1></AccordionTrigger>
                           <AccordionContent>
                             {categories.map(category => (
                               <div className="flex items-center justify-between space-x-2" key={category.sub_category_name}>
@@ -324,23 +336,24 @@ const ContactPage = () => {
                         </AccordionItem>
 
                         <AccordionItem value="item-3">
-                          <AccordionTrigger><h1 className='font-semibold'>Price</h1></AccordionTrigger>
+                          <AccordionTrigger><h1 className='font-semibold'>{t('price')}</h1></AccordionTrigger>
                           <AccordionContent>
                             <div className='pl-1'>
                               <div className="flex items-center">
                                 <input className="border-orange-500 w-5 h-5 bg-orange-500 text-orange-500" type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} />
-                                <label className='font-normal ml-2' htmlFor="free">Free</label>
+                                <label className='font-normal ml-2' htmlFor="free">{t('free')}</label>
+                                
                               </div>
                               <div className="flex items-center mt-2">
                                 <input type="radio" id="paid" name="priceFilter" value="paid" onChange={() => handleCheckboxChange("paid", 'price')} checked={selectedFilter === "paid"} className="w-5 h-5" />
-                                <label className='font-normal ml-2' htmlFor="paid">Paid</label>
+                                <label className='font-normal ml-2' htmlFor="paid">{t('paid')}</label>
                               </div>
                             </div>
                           </AccordionContent>
                         </AccordionItem>
                       </Accordion>
                       <div className="flex justify-center mt-4">
-                        <button onClick={() => setShowFiltersPopup(false)} className="bg-orange-400 text-white px-4 py-2 rounded-lg">Submit</button>
+                        <button onClick={() => setShowFiltersPopup(false)} className="bg-orange-400 text-white px-4 py-2 rounded-lg">{t('submit')}</button>
                       </div>
                     </div>
                   </div>

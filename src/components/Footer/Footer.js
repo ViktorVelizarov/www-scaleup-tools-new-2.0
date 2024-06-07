@@ -3,26 +3,36 @@ import Link from 'next/link';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { FaInstagramSquare } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa';
-import { FaWhatsappSquare } from 'react-icons/fa';
 import { TbMail } from 'react-icons/tb';
 
-function Footer() {
+// Import translations
+import enTranslations from '@/translations/en.json';
+import skTranslations from '@/translations/sk.json';
+import czTranslations from '@/translations/cz.json';
+
+const translations = {
+  en: enTranslations,
+  sk: skTranslations,
+  cz: czTranslations,
+};
+
+function Footer({ selectedLanguage }) {
+  console.log(selectedLanguage)
+  const t = (key) => translations[selectedLanguage][key] || key; // Translation function
   return (
     <div
       className={`bg-reverse-gradient-main 2xl:h-[24vh] text-white py-10`}
     >
       <div className="max-w-7xl m-[0_auto] px-8 flex flex-col sm:flex-row gap-10">
         <div className="w-full sm:w-1/2">
-          <h3 className="text-sm font-bold pb-1">SCALEUP.TOOLS</h3>
+          <h3 className="text-sm font-bold pb-1">{t('footer_title')}</h3>
           <p>
-            Boost productivity, save costs, and foster growth with our cutting-edge products. Originally developed to
-            enhance our services, we're now going public with these powerful tools. Experience efficiency firsthand while
-            we offer quick consulting and training on our or other cool tools. Keep in touch!
+          {t('footer_description')}
           </p>
         </div>
 
         <div className="w-[90%] sm:w-[45%] md:w-[18%] mb-5 md:mb-0">
-          <h3 className="text-sm font-bold pb-1">OUR LOCATIONS</h3>
+          <h3 className="text-sm font-bold pb-1">{t('footer_locations_title')}</h3>
           <div className="flex flex-wrap justify-around font-bold w-full">
             <Link
               href="https://goo.gl/maps/XeSFr5DFbvQbfXC28"
@@ -87,7 +97,7 @@ function Footer() {
           </div>
         </div>
         <div className="w-[90%] sm:w-[45%] md:w-[20%]">
-          <h3 className="text-sm font-bold pb-1">GET IN TOUCH</h3>
+          <h3 className="text-sm font-bold pb-1">{t('footer_contact_title')}</h3>
           <div class="flex w-full py-2">
             <Link
               href="https://www.linkedin.com/company/scaleupagency/"

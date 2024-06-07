@@ -12,7 +12,7 @@ const DefaultLayout = ({ children }) => {
       <Navbar selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
       {React.cloneElement(children, { selectedLanguage })} {/* Pass selectedLanguage to children */}
       <Consent />
-      <Footer />
+      <Footer selectedLanguage={selectedLanguage} />
     </div>
   );
 };

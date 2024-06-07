@@ -23,6 +23,25 @@
     "and_more": "a více...",
     "loading": "Načítám...",
     "interested_in_training": "Máte zájem o rychlé zaškolení?",
-    "training_cta": "Naplánujte si rychlé úvodní setkání a zjistíme, jak vám můžeme pomoci urychlit vaše zaškolení na jakýkoli uvedený nástroj nebo jen doladit."
-  }
+    "training_cta": "Naplánujte si rychlé úvodní setkání a zjistíme, jak vám můžeme pomoci urychlit vaše zaškolení na jakýkoli uvedený nástroj nebo jen doladit.",
+ 
+    "explore_ai_applications": "Prozkoumejte aplikace AI",
+    "discover_intelligent_solutions": "Objevte svět inteligentních řešení pro každou potřebu",
+    "enter_tool_name": "Zadejte název nástroje...",
+    "filters": "Filtry",
+    "category": "Kategorie",
+    "sub_category": "Podkategorie",
+    "price": "Cena",
+    "free": "Zdarma",
+    "paid": "Placené",
+    "submit": "Odeslat",
+    "reset_filters": "Resetovat filtry",
+
+    "footer_title": "SCALEUP.TOOLS",
+    "footer_description": "Zvyšte produktivitu, ušetřete náklady a podpořte růst s našimi špičkovými produkty. Původně vyvinuté k zlepšení našich služeb, nyní tyto výkonné nástroje nabízíme veřejně. Vyzkoušejte efektivitu na vlastní kůži, přičemž nabízíme rychlé poradenství a školení na naše nebo jiné skvělé nástroje. Zůstaňte v kontaktu!",
+    "footer_locations_title": "NAŠE POBOČKY",
+    "footer_contact_title": "KONTAKTUJTE NÁS",
+    "footer_privacy_policy": "Zásady ochrany osobních údajů",
+    "footer_cookies_policy": "Zásady používání cookies"
+}
   

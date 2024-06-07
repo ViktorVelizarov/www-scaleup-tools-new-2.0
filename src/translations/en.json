@@ -23,6 +23,26 @@
     "and_more": "and more...",
     "loading": "Loading...",
     "interested_in_training": "Interested in getting trained fast?",
-    "training_cta": "Schedule a quick intro call and let's explore how we can help you to accelerate your onboarding to any mentioned tool or just do the fine-tuning."
-  }
+    "training_cta": "Schedule a quick intro call and let's explore how we can help you to accelerate your onboarding to any mentioned tool or just do the fine-tuning.",
+  
+    "explore_ai_applications": "Explore AI Applications",
+    "discover_intelligent_solutions": "Discover a World of Intelligent Solutions for Every Need",
+    "enter_tool_name": "Enter a tool name...",
+    "filters": "Filters",
+    "category": "Category",
+    "sub_category": "Sub-Category",
+    "price": "Price",
+    "free": "Free",
+    "paid": "Paid",
+    "submit": "Submit",
+    "reset_filters": "Reset Filters",
+
+    "footer_title": "SCALEUP.TOOLS",
+    "footer_description": "Boost productivity, save costs, and foster growth with our cutting-edge products. Originally developed to enhance our services, we're now going public with these powerful tools. Experience efficiency firsthand while we offer quick consulting and training on our or other cool tools. Keep in touch!",
+    "footer_locations_title": "OUR LOCATIONS",
+    "footer_contact_title": "GET IN TOUCH",
+    "footer_privacy_policy": "Privacy Policy",
+    "footer_cookies_policy": "Cookies Policy"
+    
+}
   
