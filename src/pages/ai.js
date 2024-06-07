@@ -38,7 +38,7 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{mainCategory}</span>
         <span className="bg-orange-300 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{subCategory}</span>
       </div>
-      <div className="mt-2 text-base font-extralight overflow-hidden overflow-ellipsis">
+      <div className="mt-2 text-base font-extralight overflow-hidden overflow-ellipsis" style={{ height: '6rem' }}>
         <p>{truncatedDescription}</p>
       </div>
     </article>
