@@ -11,13 +11,15 @@ import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 
 
-const ToolDetailPage = () => {
+const ToolDetailPage = ({ selectedLanguage }) => {
   const router = useRouter();
   const { id } = router.query; // Get the id from the URL
   const [toolData, setToolData] = useState(null);
   const [similarTools, setSimilarTools] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const t = (key) => translations[selectedLanguage]?.[key] || key; // Translation function
+  console.log("selectedLanguage")
+  console.log(selectedLanguage)
   useEffect(() => {
     if (id) {
       // Fetch tool data based on the id
@@ -112,7 +114,7 @@ const ToolDetailPage = () => {
   } = toolData;
 
   return (
-    <AIToolsLayout>
+    <>
       <div className='bg-blue-200'>
         <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-32 pt-28">
           <div className="flex items-center mb-8">
@@ -232,7 +234,7 @@ const ToolDetailPage = () => {
           </div>
         </div>
       </div>
-    </AIToolsLayout>
+    </>
   );
 };
 

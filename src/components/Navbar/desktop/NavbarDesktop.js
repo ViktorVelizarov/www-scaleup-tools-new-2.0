@@ -19,12 +19,14 @@ const translations = {
 };
 
 const NavbarDesktop = ({ selectedLanguage, setSelectedLanguage }) => {
+   // Default to "en" if selectedLanguage is undefined
+   const language = selectedLanguage || 'en';
   const [bgColor, setBgColor] = useState();
   const [textColor, setTextColor] = useState();
   const [logoColor, setLogoColor] = useState();
   const [hoverColor, setHoverColor] = useState();
   const [padding, setPadding] = useState();
-  const t = (key) => translations[selectedLanguage][key] || key; // Translation function
+  const t = (key) => translations[language][key] || key; // Translation function
 
   const navigationLinks = [
     { title: t('navigation_home'), link: '/' },

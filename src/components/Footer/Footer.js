@@ -17,8 +17,9 @@ const translations = {
 };
 
 function Footer({ selectedLanguage }) {
-  console.log(selectedLanguage)
-  const t = (key) => translations[selectedLanguage][key] || key; // Translation function
+  // Default to "en" if selectedLanguage is undefined
+  const language = selectedLanguage || 'en';
+  const t = (key) => translations[language][key] || key; // Translation function
   return (
     <div
       className={`bg-reverse-gradient-main 2xl:h-[24vh] text-white py-10`}
