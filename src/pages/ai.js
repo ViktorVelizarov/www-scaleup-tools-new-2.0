@@ -13,11 +13,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory }) {
+function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory, toolId, postersData }) {
   const truncatedDescription = description ? description.split('. ')[0] : 'Description not available';
+  
+  // Find matching poster link for the tool id
+  const matchingPoster = postersData.find(poster => poster.id == toolId);
+  const posterSrc = matchingPoster ? matchingPoster.posterLink : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png';
 
   return (
-    <article className="flex flex-col px-4 pt-4 pb-8 mt-5 w-full bg-white rounded-xl max-md:pr-5 h-64">
+    <article className="flex flex-col p-4 mt-5 w-full bg-white rounded-xl shadow-lg">
       <div className="flex gap-5 justify-between w-full">
         <div className="flex gap-5 justify-between text-xl font-bold">
           <img loading="lazy" src={imgSrc} alt={title} className="shrink-0 aspect-[1.09] w-[51px]" />
@@ -25,16 +29,21 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         </div>
         {pricing && <div className="self-start mt-2.5 text-base font-extralight text-center">{pricing}</div>}
       </div>
-      <div className="flex mt-1 space-x-2">
-        <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{mainCategory}</span>
-        <span className="bg-gray-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{subCategory}</span>
+      <div className="mt-4 -mx-4">
+        <img src={posterSrc} alt={`Poster for ${title}`} className="w-full h-48 object-cover rounded-lg" />
       </div>
-      <div className="mt-6 text-base font-extralight overflow-hidden overflow-ellipsis mb-1">
-      <p  dangerouslySetInnerHTML={{ __html: truncatedDescription }}></p>
+      <div className="flex mt-1 space-x-2">
+        <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{mainCategory}</span>
+        <span className="bg-orange-300 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{subCategory}</span>
+      </div>
+      <div className="mt-2 text-base font-extralight overflow-hidden overflow-ellipsis">
+        <p>{truncatedDescription}</p>
       </div>
     </article>
   );
 }
+
+
   
 const ContactPage = () => {
   const [toolData, setToolData] = useState([]);
@@ -50,6 +59,7 @@ const ContactPage = () => {
   const [pageWindow, setPageWindow] = useState([1, 5]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showFiltersPopup, setShowFiltersPopup] = useState(false); // State for showing filters popup
+  const [postersData, setPostersData] = useState([]);
 
   useEffect(() => {
     const fetchSheetsData = async () => {
@@ -84,6 +94,16 @@ const ContactPage = () => {
       }
     };
 
+    const fetchPostersData = async () => {
+      try {
+        const response = await fetch('/api/getSheetsData/getPosters');
+        const data = await response.json();
+        setPostersData(data);
+      } catch (error) {
+        console.error('Error fetching posters data:', error);
+      }
+    };
+
     const fetchCategories = async () => {
       try {
         const response = await fetch('/api/getAItools/categories');
@@ -110,6 +130,7 @@ const ContactPage = () => {
     fetchToolData();
     fetchToolDescriptions();
     fetchCategories();
+    fetchPostersData();
   }, []);
 
   const handleCheckboxChange = (value, type) => {
@@ -194,11 +215,11 @@ const ContactPage = () => {
 
   return (
 
-      <div className="flex flex-col min-h-screen bg-blue-200">
-        <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://i.pinimg.com/originals/32/b8/77/32b877ed4aa7778cc7d43ebb7d95a6f1.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-          <h1 className="text-4xl font-bold text-center text-black max-w-full mt-10 md:text-5xl pt-16">Explore AI Applications</h1>
-          <p className="text-xl text-center text-black mt-4 max-w-full md:text-2xl">Discover a World of Intelligent Solutions for Every Need</p>
-          <form className="flex justify-center items-start px-3.5 py-4 mt-8 max-w-full text-2xl font-extralight text-black bg-white rounded-xl border  border-solid shadow-sm w-[750px] max-md:pr-5 max-md:mt-10">
+      <div className="flex flex-col min-h-screen bg-gray-100">
+        <header className="flex flex-col justify-between items-center px-16 py-8 bg-gray-300 relative" style={{ backgroundImage: 'url("https://t4.ftcdn.net/jpg/02/44/35/67/360_F_244356708_9sarXrMLZEEMAI2KKt3on8x1mCgfQKrQ.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+          <h1 className="text-4xl font-bold text-center text-white max-w-full mt-10 md:text-5xl pt-16">Explore AI Applications</h1>
+          <p className="text-xl text-center text-white mt-4 max-w-full md:text-2xl">Discover a World of Intelligent Solutions for Every Need</p>
+          <form className="flex justify-center items-start px-3.5 py-4 mt-8 max-w-full text-2xl font-extralight text-black bg-white rounded-3xl border  border-solid shadow-sm w-[700px] max-md:pr-5 max-md:mt-10">
             <label className="sr-only" htmlFor="toolInput">Enter a tool name</label>
             <input
               className="w-full bg-transparent border-none outline-none text-xl"
@@ -209,7 +230,7 @@ const ContactPage = () => {
               value={searchTerm}
               onChange={handleSearchInputChange}
             />
-            <span className="text-xl text-black ml-auto pt-1 pr-1"><FaSearch /></span>
+            <span className="text-xl text-black ml-auto pt-1 pr-1"><FaSearch className='text-orange-500'/></span>
           </form>
         </header>
 
@@ -223,14 +244,19 @@ const ContactPage = () => {
           </button>
         </div>
 
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-blue-200 ml-16">
-          <div className="md:col-span-1 pt-14 pl-14 pr-3">
-            <div className="self-start ">
-              <section>
-                <div className="flex justify-between items-center mb-4 hidden md:flex">
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-grey-200 ml-16 ">
+          <div className="md:col-span-1 pt-14 pl-14 pr-3 ">
+          <div className="gradient-border-container">
+          <div className="gradient-border-content">
+           
+          </div>
+          </div>
+            <div className="self-start border-orange-500 border-2 rounded-lg p-4 bg-white">
+              <section >
+                <div className="flex justify-between items-center mb-4 hidden md:flex ">
                   <h2 className="text-2xl font-bold text-black">Filters</h2>
-                  <button onClick={handleResetFilters} className="bg-blue-400 text-black px-1 py-1 rounded-lg">
-                    <IoIosRefresh />
+                  <button onClick={handleResetFilters} className="bg-orange-400 text-black px-1 py-1 rounded-lg">
+                    <IoIosRefresh className='text-white'/>
                   </button>
                 </div>
 
@@ -240,7 +266,7 @@ const ContactPage = () => {
                     <div className="bg-white rounded-lg p-8 w-full max-w-md">
                       <div className="flex justify-between items-center mb-4">
                         <h2 className="text-2xl font-bold text-black">Filters</h2>
-                        <button onClick={() => setShowFiltersPopup(false)} className="bg-blue-400 text-black px-3 py-1 rounded-lg">Close</button>
+                        <button onClick={() => setShowFiltersPopup(false)} className="bg-orange-400 text-black px-3 py-1 rounded-lg">Close</button>
                       </div>
                       <Accordion type="multiple" collapsible defaultValue={["item-1", "item-2", "item-3"]}>
                         <AccordionItem value="item-1">
@@ -250,7 +276,7 @@ const ContactPage = () => {
                               <div className="flex items-center justify-between space-x-2" key={category.main_category_name}>
                                 <div className="flex items-center space-x-2">
                                   <Checkbox
-                                    className="w-6 h-6 border-blue-500 border-2 m-1"
+                                    className="w-6 h-6 border-orange-500 border-2 m-1"
                                     value={category.main_category_name}
                                     onCheckedChange={(checked) => handleCheckboxChange(category.main_category_name, 'main')}
                                     checked={selectedMainCategories.includes(category.main_category_name)}
@@ -277,7 +303,7 @@ const ContactPage = () => {
                               <div className="flex items-center justify-between space-x-2" key={category.sub_category_name}>
                                 <div className="flex items-center space-x-2">
                                   <Checkbox
-                                    className="w-6 h-6 border-blue-500 border-2 m-1"
+                                    className="w-6 h-6 border-orange-500 border-2 m-1"
                                     value={category.sub_category_name}
                                     onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
                                     checked={selectedSubCategories.includes(category.sub_category_name)}
@@ -302,7 +328,7 @@ const ContactPage = () => {
                           <AccordionContent>
                             <div className='pl-1'>
                               <div className="flex items-center">
-                                <input type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} className="w-5 h-5 " />
+                                <input className="border-orange-500 w-5 h-5 bg-orange-500 text-orange-500" type="radio" id="free" name="priceFilter" value="free" onChange={() => handleCheckboxChange("free", 'price')} checked={selectedFilter === "free"} />
                                 <label className='font-normal ml-2' htmlFor="free">Free</label>
                               </div>
                               <div className="flex items-center mt-2">
@@ -314,7 +340,7 @@ const ContactPage = () => {
                         </AccordionItem>
                       </Accordion>
                       <div className="flex justify-center mt-4">
-                        <button onClick={() => setShowFiltersPopup(false)} className="bg-blue-400 text-white px-4 py-2 rounded-lg">Submit</button>
+                        <button onClick={() => setShowFiltersPopup(false)} className="bg-orange-400 text-white px-4 py-2 rounded-lg">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -329,7 +355,7 @@ const ContactPage = () => {
                         <div className="flex items-center justify-between space-x-2" key={category.main_category_name}>
                           <div className="flex items-center space-x-2">
                             <Checkbox
-                              className="w-6 h-6 border-blue-500 border-2 m-1"
+                              className="w-6 h-6 border-orange-500 border-2 m-1"
                               value={category.main_category_name}
                               onCheckedChange={(checked) => handleCheckboxChange(category.main_category_name, 'main')}
                               checked={selectedMainCategories.includes(category.main_category_name)}
@@ -356,7 +382,7 @@ const ContactPage = () => {
                         <div className="flex items-center justify-between space-x-2" key={category.sub_category_name}>
                           <div className="flex items-center space-x-2">
                             <Checkbox
-                              className="w-6 h-6 border-blue-500 border-2 m-1"
+                              className="w-6 h-6 border-orange-500 border-2 m-1"
                               value={category.sub_category_name}
                               onCheckedChange={(checked) => handleCheckboxChange(category.sub_category_name, 'sub')}
                               checked={selectedSubCategories.includes(category.sub_category_name)}
@@ -421,6 +447,8 @@ const ContactPage = () => {
                             pricing={tool.Free_version ? "Free" : (tool.Paid_version ? "Paid" : null)}
                             mainCategory={tool.main_category_name}
                             subCategory={tool.sub_category_name}
+                            toolId={tool.tool_id}
+                            postersData={postersData}
                           />
                         </a>
                       </Link>
@@ -439,7 +467,7 @@ const ContactPage = () => {
                   <button
                     key={pageWindow[0] + i}
                     onClick={() => paginate(pageWindow[0] + i)}
-                    className={`px-3 py-1 mx-1 ${currentPage === pageWindow[0] + i ? 'bg-blue-500 text-white rounded-lg' : 'bg-gray-200 text-black rounded-lg'}`}
+                    className={`px-3 py-1 mx-1 ${currentPage === pageWindow[0] + i ? 'bg-orange-500 text-white rounded-lg' : 'bg-gray-200 text-black rounded-lg'}`}
                   >
                     {pageWindow[0] + i}
                   </button>
