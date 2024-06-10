@@ -14,19 +14,51 @@ import {
 
 
 
-function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory, toolId, postersData }) {
-  const truncatedDescription = description ? description.split('. ')[0] : 'Description not available';
-  
-  // Find matching poster link for the tool id
-  const matchingPoster = postersData.find(poster => poster.id == toolId);
-  const posterSrc = matchingPoster ? matchingPoster.posterLink : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png';
+function ToolCard({ imgSrc, title, pricing, mainCategory, subCategory, toolId, postersData }) {
+  const [description, setDescription] = useState('');
+  const [loadingDescription, setLoadingDescription] = useState(true);
 
+    // Find matching poster link for the tool id
+    const matchingPoster = postersData.find(poster => poster.id == toolId);
+    const posterSrc = matchingPoster ? matchingPoster.posterLink : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png';
+
+    useEffect(() => {
+      const fetchDescription = async () => {
+        try {
+          const response = await fetch(`/api/getSheetsData/getDescription?toolId=${toolId}`);
+          const data = await response.json();
+          if (data.data) {
+            setDescription(data.data);
+          } else {
+            setDescription('Description not available');
+          }
+          setLoadingDescription(false);
+        } catch (error) {
+          console.error('Error fetching description:', error);
+          setLoadingDescription(false);
+        }
+      };
+
+      fetchDescription();
+  }, [toolId]);
+
+  // Display loading spinner while description is being fetched
+  if (loadingDescription) {
+    return (
+      <div className="flex justify-center items-center w-full col-span-1 md:col-span-2 lg:col-span-3">
+        <ClipLoader size={50} color={"#123abc"} loading={loadingDescription} />
+      </div>
+    );
+  }
+
+  // Render ToolCard once description is loaded
   return (
     <article className="flex flex-col p-4 mt-5 w-full bg-white rounded-xl shadow-lg">
       <div className="flex gap-5 justify-between w-full">
         <div className="flex gap-5 justify-between text-xl font-bold">
           <img loading="lazy" src={imgSrc} alt={title} className="shrink-0 aspect-[1.09] w-[51px]" />
-          <div className="my-auto">{title}</div>
+          <div className="my-auto leading-6" style={{ maxHeight: '3rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {title}</div>
         </div>
         {pricing && <div className="self-start mt-2.5 text-base font-extralight text-center">{pricing}</div>}
       </div>
@@ -38,7 +70,7 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         <span className="bg-orange-300 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{subCategory}</span>
       </div>
       <div className="mt-2 text-base font-extralight overflow-hidden overflow-ellipsis" style={{ height: '6rem' }}>
-        <p>{truncatedDescription}</p>
+        <p>{description}</p>
       </div>
     </article>
   );
@@ -437,16 +469,15 @@ const ContactPage = ({ selectedLanguage }) => {
                     return (
                       <Link legacyBehavior key={index} href={`/tools/${tool.tool_id}`}>
                         <a>
-                          <ToolCard
-                            imgSrc={imgSrc}
-                            title={tool.tool_name}
-                            description={tool.tool_desc}
-                            pricing={tool.Free_version ? "Free" : (tool.Paid_version ? "Paid" : null)}
-                            mainCategory={tool.main_category_name}
-                            subCategory={tool.sub_category_name}
-                            toolId={tool.tool_id}
-                            postersData={postersData}
-                          />
+                        <ToolCard
+                          imgSrc={imgSrc}
+                          title={tool.tool_name}
+                          pricing={tool.Free_version ? "Free" : (tool.Paid_version ? "Paid" : null)}
+                          mainCategory={tool.main_category_name}
+                          subCategory={tool.sub_category_name}
+                          toolId={tool.tool_id} // Pass toolId as prop
+                          postersData={postersData}
+                        />
                         </a>
                       </Link>
                     );
