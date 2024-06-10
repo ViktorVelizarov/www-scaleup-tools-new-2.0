@@ -247,23 +247,23 @@ const ContactPage = ({ selectedLanguage }) => {
         </header>
 
         {/* Filters button for small screens */}
-        <div className="md:col-span-1 pt-14 pl-14 pr-3">
+        <div className="container mx-auto  md:col-span-1 pt-14 pl-4 pr-4">
           <button
             onClick={() => setShowFiltersPopup(true)}
-            className="bg-white text-black px-3 py-2 rounded-xl w-full mb-4 md:hidden"
+            className="bg-white text-black  py-2 rounded-xl w-full  md:hidden"
           >
             Filters
           </button>
         </div>
 
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-grey-200 ml-16 ">
-          <div className="md:col-span-1 pt-14 pl-14 pr-3 ">
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 relative bg-grey-200 px-4"> {/* Added container mx-auto and px-4 */}
+          <div className="md:col-span-1 lg:pt-14 md:pt-14 pl-14 pr-3 ">
           <div className="gradient-border-container">
           <div className="gradient-border-content">
            
           </div>
           </div>
-            <div className="self-start border-orange-500 border-2 rounded-lg p-4 bg-white">
+            <div className="self-start border-orange-500 border-2 rounded-lg p-4 bg-white hidden md:block">
               <section >
                 <div className="flex justify-between items-center mb-4 hidden md:flex ">
                   <h2 className="text-2xl font-bold text-black">{t('filters')}</h2>
