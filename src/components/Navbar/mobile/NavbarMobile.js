@@ -24,7 +24,7 @@ const NavbarMobile = ({ selectedLanguage, setSelectedLanguage }) => {
   const [textColor, setTextColor] = useState();
   const [logoColor, setLogoColor] = useState();
 
-  const t = (key) => translations[language][key] || key;
+  const t = (key) => translations["en"][key] || key;
 
   const navigationLinks = [
     { title: t('navigation_home'), link: '/' },

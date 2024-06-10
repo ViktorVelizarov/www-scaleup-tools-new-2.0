@@ -9,6 +9,7 @@ import { BsLinkedin } from "react-icons/bs";
 import { IoLogoYoutube } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa";
 
 // Import translations
 import enTranslations from '@/translations/en.json';
@@ -197,7 +198,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
               {tiktok_url && (
                 <div className="mb-2 lg:mb-0">
                   <a href={tiktok_url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2">
-                    <i className="fab fa-tiktok text-black"></i>
+                  <FaTiktok />
                     <span className="hidden sm:inline">TikTok</span>
                   </a>
                 </div>
@@ -248,4 +249,3 @@ const ToolDetailPage = ({ selectedLanguage }) => {
 };
 
 export default ToolDetailPage;
-

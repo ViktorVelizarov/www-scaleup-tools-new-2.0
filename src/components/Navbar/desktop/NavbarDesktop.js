@@ -20,8 +20,9 @@ const NavbarDesktop = ({ selectedLanguage, setSelectedLanguage }) => {
   const [logoColor, setLogoColor] = useState();
   const [hoverColor, setHoverColor] = useState();
   const [padding, setPadding] = useState();
+  const language = selectedLanguage || 'en';
 
-  const t = (key) => translations[selectedLanguage][key] || key;
+  const t = (key) => translations[language][key] || key;
 
   const navigationLinks = [
     { title: t('navigation_home'), link: '/' },

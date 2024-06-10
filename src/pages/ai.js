@@ -500,5 +500,3 @@ const ContactPage = ({ selectedLanguage }) => {
 }
 
 export default ContactPage;
-
-
