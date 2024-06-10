@@ -2,7 +2,8 @@ export default async function getToolById(req, res) {
     const { id } = req.query;
   
     try {
-      const response = await fetch('https://getfullaitools-2ttopirmva-uc.a.run.app', {
+      //https://getfullaitools-2ttopirmva-uc.a.run.app
+      const response = await fetch('https://databasewithdesc3-2ttopirmva-uc.a.run.app/', {
         method: 'GET'
       });
   

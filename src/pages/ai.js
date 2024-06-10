@@ -4,7 +4,6 @@ import AIToolsLayout from '@/Layouts/AIToolsLayout';
 import { ClipLoader } from 'react-spinners';
 import { IoIosRefresh } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
-import Head from 'next/head';
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Accordion,
@@ -12,7 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useTranslation } from 'next-i18next';
+
 
 
 function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCategory, toolId, postersData }) {
@@ -59,7 +58,6 @@ const translations = {
 const ContactPage = ({ selectedLanguage }) => {
   const [toolData, setToolData] = useState([]);
   const [sheetsData, setSheetsData] = useState([]);
-  const [toolDescriptions, setToolDescriptions] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedMainCategories, setSelectedMainCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState([]);
@@ -89,22 +87,12 @@ const ContactPage = ({ selectedLanguage }) => {
         const response = await fetch('/api/getAItools/tools');
         const data = await response.json();
         setToolData(data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching tool data:', error);
       }
     };
 
-    const fetchToolDescriptions = async () => {
-      try {
-        const response = await fetch('/api/getSheetsData/getDescriptions');
-        const data = await response.json();
-        setToolDescriptions(data);
-      } catch (error) {
-        console.error('Error fetching tool descriptions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     const fetchPostersData = async () => {
       try {
@@ -140,7 +128,6 @@ const ContactPage = ({ selectedLanguage }) => {
 
     fetchSheetsData();
     fetchToolData();
-    fetchToolDescriptions();
     fetchCategories();
     fetchPostersData();
   }, []);
@@ -447,16 +434,13 @@ const ContactPage = ({ selectedLanguage }) => {
                     const matchingSheetData = sheetsData.find(sheet => sheet.logoLink === tool.tool_id.toString());
                     const imgSrc = matchingSheetData ? matchingSheetData.company : 'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg';
 
-                    const descriptionData = toolDescriptions.find(description => description.tool_id === tool.tool_id.toString());
-                    const description = descriptionData ? descriptionData.description : 'Description not available';
-
                     return (
                       <Link legacyBehavior key={index} href={`/tools/${tool.tool_id}`}>
                         <a>
                           <ToolCard
                             imgSrc={imgSrc}
                             title={tool.tool_name}
-                            description={description}
+                            description={tool.tool_desc}
                             pricing={tool.Free_version ? "Free" : (tool.Paid_version ? "Paid" : null)}
                             mainCategory={tool.main_category_name}
                             subCategory={tool.sub_category_name}

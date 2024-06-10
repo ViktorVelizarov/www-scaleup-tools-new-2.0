@@ -53,15 +53,10 @@ const ToolDetailPage = ({ selectedLanguage }) => {
 
           const logo = logoData ? logoData.company : 'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'; // Default image if no match is found
 
-          // Fetch the description
-          const descriptionResponse = await fetch('/api/getSheetsData/getDescriptions');
-          const descriptions = await descriptionResponse.json();
-          const descriptionData = descriptions.find(desc => desc.tool_id === id);
-
-          const description = descriptionData ? descriptionData.description : 'Description not available';
+          const toolDesc = tool.tool_desc || "Description not available";
 
           // Combine the data
-          setToolData({ ...tool, poster, logo, description });
+          setToolData({ ...tool, poster, logo, tool_desc: toolDesc});
 
           // Fetch all tools for finding similar applications
           const allToolsResponse = await fetch('/api/getAItools/tools');
@@ -111,7 +106,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
     tool_name,
     main_category_name,
     sub_category_name,
-    description,
+    tool_desc,
     url,
     Free_version,
     company_name,
@@ -223,7 +218,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
           </div>
           <div className="mb-8">
             <h2 className="text-2xl font-bold mb-4">{t('about')} {tool_name}</h2>
-            <p className="text-lg" dangerouslySetInnerHTML={{ __html: description }}></p>
+            <p className="text-lg" dangerouslySetInnerHTML={{ __html: tool_desc }}></p>
           </div>
           <div>
             <h2 className="text-2xl font-bold mb-4">{t('similar_tools')}:</h2>
