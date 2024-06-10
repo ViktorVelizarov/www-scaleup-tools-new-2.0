@@ -1,13 +1,9 @@
-// components/Navbar/desktop/NavbarDesktop.js
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import LanguageDropdown from '../LanguageDropdown'; // Adjust the import path as needed
+import LanguageDropdown from '../LanguageDropdown';
 import NavigationLink from '../NavigationLink/NavigationLink';
 
-
-
-// Import translations
 import enTranslations from '@/translations/en.json';
 import skTranslations from '@/translations/sk.json';
 import czTranslations from '@/translations/cz.json';
@@ -19,26 +15,25 @@ const translations = {
 };
 
 const NavbarDesktop = ({ selectedLanguage, setSelectedLanguage }) => {
-   // Default to "en" if selectedLanguage is undefined
-   const language = selectedLanguage || 'en';
   const [bgColor, setBgColor] = useState();
   const [textColor, setTextColor] = useState();
   const [logoColor, setLogoColor] = useState();
   const [hoverColor, setHoverColor] = useState();
   const [padding, setPadding] = useState();
-  const t = (key) => translations[language][key] || key; // Translation function
+
+  const t = (key) => translations[selectedLanguage][key] || key;
 
   const navigationLinks = [
     { title: t('navigation_home'), link: '/' },
-    { title: t('navigation_ai_applications'), link: '/ai' },      
+    { title: t('navigation_ai_applications'), link: '/ai' },
     { title: t('navigation_gpt_tools'), link: '/' },
     { title: t('navigation_ai_trends'), link: '/trends' },
     { title: t('navigation_events'), link: '/' },
     { title: t('navigation_contacts'), link: '/contact' },
   ];
 
-  const handleLanguageChange = (e) => {
-    setSelectedLanguage(e.target.value);
+  const handleLanguageChange = (language) => {
+    setSelectedLanguage(language);
   };
 
   useEffect(() => {
@@ -66,9 +61,7 @@ const NavbarDesktop = ({ selectedLanguage, setSelectedLanguage }) => {
   }, []);
 
   return (
-    <div
-      className={`${bgColor} ${padding} hidden md:block ease-in duration-300 w-full fixed left-0 top-0 z-20`}
-    >
+    <div className={`${bgColor} ${padding} hidden md:block ease-in duration-300 w-full fixed left-0 top-0 z-20`}>
       <div className='px-8 max-w-7xl m-[0_auto]'>
         <div className='flex items-center justify-between'>
           <Link href={'/'}>
@@ -88,7 +81,7 @@ const NavbarDesktop = ({ selectedLanguage, setSelectedLanguage }) => {
                 {...item}
               />
             ))}
-            <LanguageDropdown value={selectedLanguage} onChange={handleLanguageChange} />
+            <LanguageDropdown selectedLanguage={selectedLanguage} onChange={handleLanguageChange} />
           </div>
         </div>
       </div>

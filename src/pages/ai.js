@@ -32,7 +32,7 @@ function ToolCard({ imgSrc, title, description, pricing, mainCategory, subCatego
         {pricing && <div className="self-start mt-2.5 text-base font-extralight text-center">{pricing}</div>}
       </div>
       <div className="mt-4 -mx-4">
-        <img src={posterSrc} alt={`Poster for ${title}`} className="w-full h-48 object-cover rounded-lg" />
+        <img src={posterSrc} alt={`Poster for ${title}`} className="w-full h-48 object-cover " />
       </div>
       <div className="flex mt-1 space-x-2">
         <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{mainCategory}</span>
