@@ -19,10 +19,22 @@ const getSheetsData = async (req, res) => {
 
     const rows = response.data.values;
     if (rows.length) {
-      const formattedRows = rows.map((row) => ({
-        id: row[0],
-        posterLink: row[1],
-      }));
+      const formattedRows = rows.map((row) => {
+        let posterLink = row[1];
+        const driveThumbnailPattern = /^https:\/\/drive\.google\.com\/thumbnail\?id=(.+)$/;
+        const match = driveThumbnailPattern.exec(posterLink);
+
+        if (match) {
+          const id = match[1];
+          posterLink = `https://lh3.googleusercontent.com/d/${id}=s1000?authuser=0`;
+        }
+
+        return {
+          id: row[0],
+          posterLink: posterLink,
+        };
+      });
+
       res.status(200).json(formattedRows);
     } else {
       res.status(200).json([]);
