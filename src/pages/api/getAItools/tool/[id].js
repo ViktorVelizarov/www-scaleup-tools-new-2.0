@@ -3,7 +3,7 @@ export default async function getToolById(req, res) {
   
     try {
       //https://getfullaitools-2ttopirmva-uc.a.run.app
-      const response = await fetch('https://databasewithdesc3-2ttopirmva-uc.a.run.app/', {
+      const response = await fetch('https://cloudfunctionsfinal-2ttopirmva-uc.a.run.app/', {
         method: 'GET'
       });
   

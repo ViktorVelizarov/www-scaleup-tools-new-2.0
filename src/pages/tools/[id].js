@@ -39,12 +39,6 @@ const ToolDetailPage = ({ selectedLanguage }) => {
           const toolResponse = await fetch(`/api/getAItools/tool/${id}`);
           const tool = await toolResponse.json();
 
-          // Fetch the poster
-          const posterResponse = await fetch('/api/getSheetsData/getPosters');
-          const posters = await posterResponse.json();
-          const posterData = posters.find(sheet => sheet.id === id);
-          const poster = posterData ? posterData.posterLink : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png'; // Default image if no match is found
-
           // Fetch the logo
           const logoResponse = await fetch('/api/getSheetsData/getLogos');
           const logos = await logoResponse.json();
@@ -56,7 +50,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
           const toolDesc = tool.tool_desc || "Description not available";
 
           // Combine the data
-          setToolData({ ...tool, poster, logo, tool_desc: toolDesc});
+          setToolData({ ...tool, logo, tool_desc: toolDesc});
 
           // Fetch all tools for finding similar applications
           const allToolsResponse = await fetch('/api/getAItools/tools');
@@ -101,7 +95,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
 
   // Destructure the tool data
   const {
-    poster,
+    poster_url,
     logo,
     tool_name,
     main_category_name,
@@ -152,7 +146,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row mb-8">
-            <img src={poster} alt="Static" className="w-full lg:w-1/3 h-auto object-cover rounded-lg mb-4 lg:mb-0" />
+            <img src={poster_url} alt="Static" className="w-full lg:w-1/3 h-auto object-cover rounded-lg mb-4 lg:mb-0" />
             <div className="lg:ml-8 flex-grow">
               <div className="mb-4 flex flex-col lg:flex-col">
                 <div className="flex-1">
@@ -226,7 +220,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
               {similarTools.map((tool) => (
                 <div key={tool.tool_id} className="bg-white p-4 rounded-lg shadow-md">
                   <a href={tool.tool_id}>
-                    <img src="https://images.genai.works/Screenshot_84_2776b067a5.jpg?width=600&height=600&quality=50" alt={tool.tool_name} className="w-full h-32 object-cover mb-4 rounded-lg" />
+                    <img src={tool.poster_url || "https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png"} alt={tool.tool_name} className="w-full h-44 object-cover mb-4 rounded-lg" />
                     <h3 className="text-xl font-bold mb-2">{tool.tool_name}</h3>
                     <div className="flex space-x-2">
                       <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{tool.main_category_name}</span>

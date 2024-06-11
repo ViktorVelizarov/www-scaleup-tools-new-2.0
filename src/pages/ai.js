@@ -14,13 +14,9 @@ import {
 
 
 
-function ToolCard({ imgSrc, title, pricing, mainCategory, subCategory, toolId, postersData }) {
+function ToolCard({ imgSrc, title, pricing, mainCategory, subCategory, toolId, posterSrc }) {
   const [description, setDescription] = useState('');
   const [loadingDescription, setLoadingDescription] = useState(true);
-
-    // Find matching poster link for the tool id
-    const matchingPoster = postersData.find(poster => poster.id == toolId);
-    const posterSrc = matchingPoster ? matchingPoster.posterLink : 'https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png';
 
     useEffect(() => {
       const fetchDescription = async () => {
@@ -63,7 +59,7 @@ function ToolCard({ imgSrc, title, pricing, mainCategory, subCategory, toolId, p
         {pricing && <div className="self-start mt-2.5 text-base font-extralight text-center">{pricing}</div>}
       </div>
       <div className="mt-4 -mx-4">
-        <img src={posterSrc} alt={`Poster for ${title}`} className="w-full h-48 object-cover " />
+      <img src={posterSrc || "https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png"} alt={`Poster for ${title}`} className="w-full h-48 object-cover" />
       </div>
       <div className="flex mt-1 space-x-2">
         <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-sm truncate max-w-[150px]">{mainCategory}</span>
@@ -466,6 +462,7 @@ const ContactPage = ({ selectedLanguage }) => {
                     const matchingSheetData = sheetsData.find(sheet => sheet.logoLink === tool.tool_id.toString());
                     const imgSrc = matchingSheetData ? matchingSheetData.company : 'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg';
 
+
                     return (
                       <Link legacyBehavior key={index} href={`/tools/${tool.tool_id}`}>
                         <a>
@@ -476,7 +473,7 @@ const ContactPage = ({ selectedLanguage }) => {
                           mainCategory={tool.main_category_name}
                           subCategory={tool.sub_category_name}
                           toolId={tool.tool_id} // Pass toolId as prop
-                          postersData={postersData}
+                          posterSrc={tool.poster_url}
                         />
                         </a>
                       </Link>
