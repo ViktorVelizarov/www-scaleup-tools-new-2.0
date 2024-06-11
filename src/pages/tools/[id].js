@@ -38,7 +38,6 @@ const ToolDetailPage = ({ selectedLanguage }) => {
           // Fetch the tool details
           const toolResponse = await fetch(`/api/getAItools/tool/${id}`);
           const tool = await toolResponse.json();
-
           // Fetch the logo
           const logoResponse = await fetch('/api/getSheetsData/getLogos');
           const logos = await logoResponse.json();
@@ -47,10 +46,10 @@ const ToolDetailPage = ({ selectedLanguage }) => {
 
           const logo = logoData ? logoData.company : 'https://t4.ftcdn.net/jpg/02/51/95/53/360_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'; // Default image if no match is found
 
-          const toolDesc = tool.tool_desc || "Description not available";
+          const toolDesc = tool.data.tool_desc || "Description not available";
 
           // Combine the data
-          setToolData({ ...tool, logo, tool_desc: toolDesc});
+          setToolData({ ...tool.data, logo, tool_desc: toolDesc});
 
           // Fetch all tools for finding similar applications
           const allToolsResponse = await fetch('/api/getAItools/tools');
@@ -58,7 +57,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
 
           // Filter similar tools
           const similarTools = allTools.filter(
-            (t) => t.main_category_name === tool.main_category_name && t.sub_category_name === tool.sub_category_name && t.tool_id !== id
+            (t) => t.main_category_name === tool.data.main_category_name && t.sub_category_name === tool.data.sub_category_name && t.tool_id !== id
           ).slice(0, 3);
 
           setSimilarTools(similarTools);
@@ -146,7 +145,7 @@ const ToolDetailPage = ({ selectedLanguage }) => {
             </div>
           </div>
           <div className="flex flex-col lg:flex-row mb-8">
-            <img src={poster_url} alt="Static" className="w-full lg:w-1/3 h-auto object-cover rounded-lg mb-4 lg:mb-0" />
+            <img src={poster_url || "https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png"} alt="Static" className="w-full lg:w-1/3 h-auto object-cover rounded-lg mb-4 lg:mb-0" />
             <div className="lg:ml-8 flex-grow">
               <div className="mb-4 flex flex-col lg:flex-col">
                 <div className="flex-1">
