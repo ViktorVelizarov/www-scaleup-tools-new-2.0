@@ -81,11 +81,11 @@ const ToolDetailPage = ({ selectedLanguage }) => {
 
   if (loading) {
     return (
-      <AIToolsLayout>
+      
         <div className="flex justify-center items-center h-screen">
           <ClipLoader size={50} color={"#123abc"} loading={loading} />
         </div>
-      </AIToolsLayout>
+     
     );
   }
 
